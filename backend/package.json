@@ -1,0 +1,23 @@
+{
+    "type": "module",
+    "name": "backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon src/server.js",
+        "start": "node src/server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "repository": "https://github.com/BitEric1/hoctiengtay.git",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.2",
+        "express": "^5.1.0",
+        "morgan": "^1.10.1"
+    },
+    "engines": {
+        "node": "20.x"
+    }
+}
