@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/assets/css/globals.css";
 import { SignedIn, SignedOut, ClerkProvider, SignIn } from "@clerk/nextjs";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import bannerURL from "@/assets/imgs/sign_in_page_img.jpg";
 import Image from "next/image";
@@ -61,6 +63,17 @@ export default function RootLayout({ children }) {
             </div>
           </SignedOut>
           <SignedIn>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              theme="light"
+            />
             <StoreProvider>{children}</StoreProvider>
           </SignedIn>
         </body>

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { FaHome, FaBookOpen, FaPhone } from "react-icons/fa";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
+import { UserButton } from "@clerk/nextjs";
+import { FaUser } from "react-icons/fa";
 const Navbar = () => {
   return (
     <nav className="w-2/12 h-screen p-6 bg-gradient-to-t from-blue-500 to-blue-700 rounded-r-xl text-white shadow-lg">
@@ -8,7 +10,21 @@ const Navbar = () => {
       <h1 className="text-center text-3xl font-extrabold mb-16 tracking-wide">
         Logo
       </h1>
-
+      <div className="py-3 px-4 text-white flex items-center gap-1">
+        <FaUser />
+        <UserButton
+          showName
+          appearance={{
+            elements: {
+              userButtonPopoverActionButtonText: { color: "white" },
+              userButtonPopoverActionButtonIcon: { color: "white" },
+              userButtonAvatarBox: { borderColor: "white" },
+              userButtonBox: { color: "white" },
+            },
+          }}
+        />
+        
+      </div>
       {/* Menu */}
       <ul className="flex flex-col gap-3">
         <li>
