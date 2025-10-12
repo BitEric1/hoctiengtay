@@ -1,86 +1,41 @@
-"use client";
-import { useContext, useState } from "react";
-
-
-
-import { Context } from "@/context/Context";
-import { GiWhiteBook } from "react-icons/gi";
-import { FaBookmark } from "react-icons/fa";
-import Navbar from "@/components/Navbar";
+import { useAuth } from "@/context/authContext";
 import Link from "next/link";
+import React from "react";
 
-export default function Home() {
-  const [activeLesson, setActiveLesson] = useState(null);
-  const { data } = useContext(Context);
-  const progress = 36;
-
-  // lấy bài học hiện tại
-  const currentLesson = data.find((d) => d.id === activeLesson);
-
+const page = () => {
+  
   return (
-    <>
-      
-      <div className="w-full h-screen flex items-center">
-        <Navbar />
-        <div className="w-10/12 h-full px-4 pb-6">
-          {/* Khung chương + progress */}
-          <div className="bg-white shadow-md rounded-xl p-4 flex items-center">
-            <div className="w-full h-full">
-              <div className="flex items-center gap-2 mb-2">
-                <FaBookmark size={24} className="text-blue-500" />
-                <h1 className="text-xl font-bold">Chương 1</h1>
-              </div>
-              <div className="relative w-full bg-gray-200 h-4 rounded-full overflow-hidden">
-                <div
-                  className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-400 to-blue-600"
-                  style={{ width: `${progress}%` }}
-                ></div>
-                <span className="absolute inset-0 flex items-center px-4 text-xs font-medium text-white">
-                  {progress}%
-                </span>
-              </div>
-            </div>
+    <div className="w-full mt-20">
+      <div className="max-w-screen-xl mx-auto h-full flex">
+        <div className="w-1/2"></div>
+        <div className="w-1/2 px-12 pt-20">
+          <div>
+            <p className="text-2xl text-center text-gray-700 font-bold mb-2">
+              Chào mừng bạn đến với{" "}
+              <span className="text-blue-400">HoctiengTày.edu</span>{" "}
+            </p>
+            <p className="text-2xl text-center text-gray-700 font-bold mb-2">
+              vừa học vừa chơi 
+            </p>
           </div>
-
-          {/* Danh sách nút */}
-          <div className="flex flex-col gap-4 items-center relative mt-4">
-            {data.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveLesson(item.id)}
-                className={item.done ? "ct__btn-disable" : "ct__btn"}
-              >
-                <GiWhiteBook size={30} className="mx-auto" />
-              </button>
-            ))}
-          </div>
-
-          {/* Overlay + Card */}
-          {currentLesson && (
-            <div
-              className="fixed inset-0 bg-black/15 flex items-center justify-center z-50"
-              onClick={() => setActiveLesson(null)}
+          <div className="flex flex-col items-center justify-center mt-20 gap-4">
+            <Link
+              href="/learn"
+              className="cst_btn-primary block w-[330px] h-[56px]  text-center "
             >
-              <div
-                className="w-[260px] h-[160px] bg-white border border-gray-200 rounded-xl shadow-lg flex flex-col items-center justify-center gap-4 animate-fadeIn"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <h2 className="text-lg font-semibold text-gray-700">
-                  {currentLesson.done
-                    ? `Ôn lại bài học ${currentLesson.id}?`
-                    : `Bắt đầu bài học ${currentLesson.id}?`}
-                </h2>
-                <Link
-                  href={`learn/${currentLesson.slug}`}
-                  className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-[0_4px_0_#1e3a8a] active:translate-y-[2px] active:shadow-none transition"
-                >
-                  {currentLesson.done ? "Ôn lại" : "Bắt đầu"}
-                </Link>
-              </div>
-            </div>
-          )}
+              Bắt đầu học
+            </Link>
+            {/* <Link
+              href="/register"
+              className="cst_btn block  w-[330px] h-[56px] leading-[35px] text-center"
+            >
+              Tôi chưa có tài khoản
+            </Link> */}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default page;

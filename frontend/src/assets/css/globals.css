@@ -3,19 +3,57 @@
 @tailwind utilities;
 
 /* custom class nút chữ nhật */
-.ct__btn {
-  @apply relative w-[140px] h-[56px] font-bold text-white rounded-lg bg-blue-500 shadow-[0_4px_0_0_#1d4ed8]  hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#1d4ed8] active:translate-y-[4px] active:shadow-none transition-all duration-150;
+/* Nút chính (màu xanh dương - của bạn) */
+/* .cst_btn {
+   @apply font-bold text-white rounded-[10px] p-3 min-w-[150px] hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none transition-all duration-150 disabled:bg-gray-300 disabled:shadow-none disabled:text-gray-500 disabled:translate-y-0 disabled:cursor-not-allowed;
+} */
+.cst_btn-primary {
+  @apply py-3 px-6  font-bold text-white rounded-[10px] bg-blue-500 shadow-[0_4px_0_0_#1d4ed8]  hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#1d4ed8] active:translate-y-[4px] active:shadow-none transition-all duration-150;
 }
-.ct__btn-disable {
+
+
+/* Nút thành công (màu xanh lá) */
+.cst_btn-success {
+  @apply py-3 px-6 font-bold text-white rounded-[10px] bg-green-500 shadow-[0_4px_0_0_#15803d] hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#15803d] active:translate-y-[4px] active:shadow-none transition-all duration-150;
+}
+
+/* Nút báo lỗi (màu đỏ) */
+.cst_btn-danger {
+  @apply py-3 px-6 font-bold text-white rounded-[10px] bg-red-500 shadow-[0_4px_0_0_#b91c1c] hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#b91c1c] active:translate-y-[4px] active:shadow-none transition-all duration-150;
+}
+.cst_btn-disable {
   @apply  relative w-[140px] h-[56px] font-bold text-white rounded-lg bg-gray-500 shadow-[0_4px_0_0_#333]  hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#3f3f3f] active:translate-y-[4px] active:shadow-none transition-all duration-150
 }
-
-
-/* custom class nút tròn */
-.ct__btn_rounded {
- @apply w-12 h-11 rounded-full bg-blue-500 text-white font-bold shadow-[0_6px_0_#1e3a8a] active:shadow-[0_2px_0_#1e3a8a] active:translate-y-1 transition-all;
+.cst_btn  {
+  @apply  font-bold text-black/70 py-3 px-6
+    rounded-xl 
+    bg-gray-100 
+    shadow-[0_4px_0_0_#c8c8c8] 
+    hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#c4c4c4]
+    active:translate-y-[4px] active:shadow-none
+    transition-all duration-150;
 }
 
-.ct__btn_rounded-disable {
+/* custom class nút tròn */
+.cst_btn-rounded-primary {
+  @apply w-12 h-11 rounded-full bg-blue-500 text-white font-bold 
+         shadow-[0_6px_0_#1e3a8a]
+         hover:translate-y-[2px] hover:shadow-[0_4px_0_#1e3a8a]
+         active:translate-y-[4px] active:shadow-none
+         transition-all duration-150;
+}
+
+.cst_btn-rounded-disable {
  @apply w-12 h-11 rounded-full bg-gray-500 text-white font-bold shadow-[0_6px_0_#333] active:shadow-[0_2px_0_#444] active:translate-y-1 transition-all;
+}
+
+
+.cst_input {
+  @apply w-full py-3 px-4 border border-gray-300 rounded-md outline-none 
+         focus:border-blue-500 focus:ring-2 focus:ring-blue-100
+         transition-all duration-150 placeholder-transparent;
+}
+
+.cst_input-label {
+  @apply absolute left-3 -top-2 bg-white px-1 text-sm text-gray-600;
 }
