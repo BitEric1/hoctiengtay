@@ -4,7 +4,7 @@ const RightNavbar = () => {
     const progress = 69;
 
     return (
-        <div className="hidden lg:block lg:w-3/12 min-h-screen px-6 py-4  border-l-2 border-gray-300 ">
+        <div className="hidden lg:block lg:w-3/12 min-h-screen px-6 py-4  border-l-[3px] border-blue-200 shadow-lg ">
             <div className="w-full  rounded-2xl border-2 border-gray-300 shadow-md p-4 mb-6">
                 <h1 className="lg:text-3xl md:text-2xl font-bold text-center">
                     Tiến trình

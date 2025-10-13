@@ -73,9 +73,7 @@ const page = () => {
           <button
             type="submit"
             onClick={onSubmit}
-            className="w-full h-[50px] bg-blue-500 text-white font-bold rounded-lg
-               shadow-[0_4px_0_#1e3a8a] hover:translate-y-[2px] hover:shadow-[0_2px_0_#1e3a8a]
-               active:translate-y-[4px] active:shadow-none transition-all duration-150"
+            className="cst_btn-primary"
           >
             Gửi liên hệ
           </button>

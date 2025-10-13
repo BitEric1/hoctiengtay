@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="lg:flex block mt-20">
       <LeftNavbar />
-      <div className="sm:w-full md:w-6/12 lg:w-7/12 h-full  lg:px-24 pb-6 px-4 mt-24">
+      <div className="sm:w-full md:w-6/12 lg:w-7/12 h-full  lg:px-24 pb-6 px-4 ">
         {/* Chương */}
         <div className="w-full bg-gradient-to-t from-blue-400 to-blue-600 text-white shadow-md rounded-xl p-4 flex items-center justify-center mt-5">
           <div className="flex items-center justify-center gap-3 mb-2">

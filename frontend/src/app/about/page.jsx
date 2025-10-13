@@ -58,7 +58,7 @@ export default function AboutHocTiengTay() {
     }, [activeIndex]);
 
     return (
-        <div className="mt-20 relative w-full space-y-12 sm:space-y-16">
+        <div className="max-w-screen-xl my-24 relative w-full space-y-12 sm:space-y-16 mx-auto">
             <HeroHeader />
 
             {/* 1) Thành viên – đồng màu với hero */}

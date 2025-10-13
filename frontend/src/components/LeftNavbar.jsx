@@ -25,7 +25,7 @@ const navbarList = [
         link: "/contact",
     },
     {
-        id: 3,
+        id: 4,
         text: "Về chúng tôi",
         icon: <FaUser size={20} />,
         link: "/about",
@@ -35,7 +35,7 @@ const navbarList = [
 const LeftNavbar = () => {
     const pathName = usePathname();
     return (
-        <nav className="hidden lg:block md:w-3/12 lg:w-2/12 h-screen py-6  border-r-2 border-gray-300 px-4 static">
+        <nav className="hidden lg:block md:w-3/12 lg:w-2/12 h-screen py-6 border-r-[3px] border-blue-200  px-4 static">
             {/* Logo */}
             <h1 className="text-center text-3xl font-extrabold mb-16 tracking-wide px-4">
                 Menu
@@ -48,7 +48,7 @@ const LeftNavbar = () => {
                             href={item.link}
                             className={`${
                                 pathName === item.link
-                                    ? "border-[3.5px] border-blue-100"
+                                    ? "bg-gradient-to-t from-blue-400 to-blue-500 text-white"
                                     : ""
                             }  flex items-center pl-4 gap-3 py-3 rounded-2xl text-lg font-medium hover:bg-black/5  transition-all duration-300 ease-in-out`}
                         >

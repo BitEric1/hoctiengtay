@@ -8,4 +8,6 @@ import img7 from './img7.png'
 import img8 from './img8.png'
 import img9 from './img9.png'
 import img10 from './img10.png'
-export {img1, img2, img3, img4, img5, img6, img7, img8, img9, img10}
+import banner2 from './banner2.jpg'
+import banner from './hinhanhbanner-hd.jpg'
+export {img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,banner2,banner}
