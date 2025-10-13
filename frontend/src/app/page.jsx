@@ -173,36 +173,26 @@ function Hero({ tab, setTab }) {
                 </div>
 
                 {/* Quick Panel under tabs */}
-                {/* <div className="mt-4 w-full max-w-3xl rounded-2xl bg-white/90 p-3 text-left text-[#0b1a3a] shadow-xl">
-                    {tab === "learn" && (
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                            <Input label="Chủ đề" placeholder="Chào hỏi…" />
-                            <Input
-                                label="Mức độ"
-                                placeholder="Cơ bản/Trung bình…"
-                            />
-                            <Primary>Vào học</Primary>
-                        </div>
-                    )}
-                    {tab === "dictionary" && (
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
-                            <Input
-                                label="Tra từ"
-                                placeholder="Nhập từ Tiếng Tày hoặc Việt"
-                            />
-                            <Primary>Tra cứu</Primary>
-                        </div>
-                    )}
-                    {tab === "culture" && (
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
-                            <Input
-                                label="Tìm tư liệu"
-                                placeholder="dân ca, trang phục, ẩm thực…"
-                            />
-                            <Primary>Xem ngay</Primary>
-                        </div>
-                    )}
-                </div> */}
+                <div className="mt-8 w-full max-w-xl rounded-2xl flex items-center justify-between bg-white/90 p-3 text-left text-[#0b1a3a] shadow-xl">
+                    <Link
+                        href="/courses"
+                        className="cst_btn-primary block text-center text-xl"
+                    >
+                        Courses
+                    </Link>
+                    <Link
+                        href="/learn"
+                        className="cst_btn-primary block text-center text-xl"
+                    >
+                        Bắt đầu học
+                    </Link>
+                    <Link
+                        href="/learn"
+                        className="cst_btn-primary block text-center text-xl"
+                    >
+                        Bắt đầu học
+                    </Link>
+                </div>
             </div>
 
             {/* wave divider */}
