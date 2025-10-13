@@ -102,8 +102,8 @@ function MatchQuestion({ questionData, onComplete }) {
   return (
     <div className="max-w-screen-xl mx-auto p-4">
       <div className="flex items-center">
-        <Link href="/learn" className="cst_btn"  >
-          Quay về 
+        <Link href="/learn" className="cst_btn-danger"  >
+          Thoát
         </Link>
 
       </div>

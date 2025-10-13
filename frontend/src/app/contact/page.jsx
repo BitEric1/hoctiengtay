@@ -12,8 +12,8 @@ const page = () => {
   return (
     <div className="w-full h-screen flex mt-20">
       <LeftNavbar />
-      <div className="md:w-6/12 lg:w-7/12  py-4">
-        <div className="max-w-md mx-auto my-10 bg-white shadow-lg rounded-xl p-8">
+      <div className="w-full   py-4">
+        <div className="w-5/12 mx-auto my-10 bg-white shadow-lg rounded-xl p-8">
           <h2 className="text-2xl font-bold text-center text-blue-500 mb-6">
             Liên hệ với chúng tôi
           </h2>
@@ -79,7 +79,7 @@ const page = () => {
           </button>
         </div>
       </div>
-      <RightNavbar />
+      
     </div>
   );
 };

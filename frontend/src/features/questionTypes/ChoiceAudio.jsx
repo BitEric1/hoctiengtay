@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import soundEffects from "../../../public/soundEffects";
-import { CheckButton } from "@/components/Button";
+import { CheckButton, SkipButton } from "@/components/Button";
 import { FaVolumeUp } from "react-icons/fa";
 import AnswerItem from "@/components/AnswerItem";
 import Link from "next/link";
@@ -136,6 +136,11 @@ function ChoiceAudio({ questionData, onComplete }) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-4 relative overflow-hidden">
+      <div className="flex justify-start w-full">
+        <Link href="/learn" className="cst_btn-danger">
+          Thoát
+        </Link>
+      </div>
       <AnimatePresence mode="wait">
         <motion.div
           key={question?.correct?.id || "placeholder"} // fallback key để tránh lỗi
@@ -176,9 +181,7 @@ function ChoiceAudio({ questionData, onComplete }) {
               </div>
 
               <div className="flex items-center gap-4">
-                <Link href="/learn" className="block cst_btn">
-                  Quay lại
-                </Link>
+                <SkipButton onSkip={handleSkip} />
                 <CheckButton
                   state={checked}
                   onCheck={handleChecked}

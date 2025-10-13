@@ -1,5 +1,6 @@
 "use client"; // Đánh dấu đây là một Client Component
 
+import LeftNavbar from "@/components/LeftNavbar";
 import LangSelect from "@/components/translate/LangSelect";
 import Spinner from "@/components/translate/Spinner";
 import WordCard from "@/components/translate/WordCard";
@@ -98,8 +99,9 @@ export default function TranslatePage() {
     );
 
     return (
-        <div className="bg-gray-50 min-h-screen">
-            <main className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8 font-sans">
+        <div className="bg-gray-50 min-h-screen mt-20 flex">
+            <LeftNavbar />
+            <main className="w-8/12 mx-auto  p-4 md:p-6 lg:p-8 font-sans">
                 <header className="text-center mb-8">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
                         Dịch Tày ↔ Việt

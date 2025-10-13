@@ -5,8 +5,6 @@ import { CheckButton, SkipButton } from "@/components/Button";
 import AnswerItem from "@/components/AnswerItem";
 import Link from "next/link";
 
-
-
 function ChoiceQuestion({ questionData, onComplete }) {
   const data = questionData;
 
@@ -45,7 +43,10 @@ function ChoiceQuestion({ questionData, onComplete }) {
     }
 
     const correct = unused[Math.floor(Math.random() * unused.length)];
-    const others = shuffle(uniqueData.filter((i) => i.id !== correct.id)).slice(0, 3);
+    const others = shuffle(uniqueData.filter((i) => i.id !== correct.id)).slice(
+      0,
+      3
+    );
     const options = shuffle([correct, ...others]);
 
     setQuestion({ correct, options });
@@ -109,6 +110,11 @@ function ChoiceQuestion({ questionData, onComplete }) {
         isTransitioning ? "opacity-50 pointer-events-none" : ""
       }`}
     >
+      <div className="flex justify-start w-full">
+        <Link href="/learn" className="cst_btn-danger">
+          Thoát
+        </Link>
+      </div>
       <AnimatePresence mode="wait">
         {question && (
           <motion.div
@@ -120,7 +126,8 @@ function ChoiceQuestion({ questionData, onComplete }) {
             className="flex flex-col items-center gap-6 w-full"
           >
             <h2 className="text-xl font-bold text-center">
-              <span className="text-blue-600">{question.correct.matChu}</span> có nghĩa là gì?
+              <span className="text-blue-600">{question.correct.matChu}</span>{" "}
+              có nghĩa là gì?
             </h2>
 
             <div className="grid gap-4">
@@ -138,9 +145,6 @@ function ChoiceQuestion({ questionData, onComplete }) {
 
             <div className="flex items-center gap-3">
               
-            <Link href="/learn" className="block cst_btn" >
-                Quay lại
-            </Link>
               <SkipButton onSkip={handleSkip} />
               <CheckButton
                 state={checked}

@@ -155,6 +155,11 @@ function WriteAnswer({ questionData, onComplete }) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-4 relative overflow-hidden">
+      <div className="flex justify-start w-full">
+        <Link href="/learn" className="cst_btn-danger">
+          Thoát
+        </Link>
+      </div>
       <AnimatePresence mode="wait">
         <motion.div
           key={question?.id || "placeholder"}
@@ -191,9 +196,6 @@ function WriteAnswer({ questionData, onComplete }) {
                 className="border-2 border-gray-300 rounded-xl p-3 w-[300px] text-lg text-center focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <div className="flex items-center gap-4">
-                <Link href="/learn" className="block cst_btn">
-                  Quay lại
-                </Link>
                 <CheckButton
                   state={checked}
                   onCheck={handleChecked}

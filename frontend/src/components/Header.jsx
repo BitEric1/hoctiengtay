@@ -34,7 +34,7 @@ const Header = () => {
         {/* Logo/Title Section */}
         <div className="w-auto h-20 flex items-center justify-center">
           <Link
-            href={user ? "/learn" : "/"}
+            href="/learn"
             className="text-xl lg:text-2xl text-white font-bold h-20 flex items-center justify-center"
           >
             <RiBookShelfFill size={25} className="mr-2 text-white" />
@@ -43,7 +43,7 @@ const Header = () => {
         </div>
 
         {/* User info / Login button */}
-        <div className="hidden lg:flex w-auto h-full items-center justify-end relative group">
+        {/* <div className="hidden lg:flex w-auto h-full items-center justify-end relative group">
           {user ? (
             <>
               <div className="flex items-center gap-2 ">
@@ -75,7 +75,7 @@ const Header = () => {
               </Link>
             )
           )}
-        </div>
+        </div> */}
       </div>
     </header>
   );

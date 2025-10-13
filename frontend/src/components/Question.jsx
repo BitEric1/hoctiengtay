@@ -1,60 +1,77 @@
 "use client";
-import { useStore } from "@/context/StoreCoursesContext";
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/context/StoreCoursesContext";
 
-import CompletePopup from "./CompletePopup";
-import CardQuestion from "@/features/questionTypes/CardQuestion";
-import ChoiceQuestion from "@/features/questionTypes/ChoiceQuestion";
-import ChoiceAudio from "@/features/questionTypes/ChoiceAudio";
-import FillInTheBlank from "@/features/questionTypes/FillInTheBlank";
 import WriteAnswer from "@/features/questionTypes/WriteAnswer";
+import CardQuestion from "@/features/questionTypes/CardQuestion";
 import MatchQuestion from "@/features/questionTypes/MatchQuestion";
+import ChoiceAudio from "@/features/questionTypes/ChoiceAudio";
+import ChoiceQuestion from "@/features/questionTypes/ChoiceQuestion";
+import FillInTheBlank from "@/features/questionTypes/FillInTheBlank";
+import Arrange from "@/features/questionTypes/Arrange";
+import WriteSentence from "@/features/questionTypes/WriteSentence";
+import CompletePopup from "./CompletePopup";
 
-function QuestionPart({ slug }) {
-  const { data } = useStore();
+
+
+function QuestionPart({ lessons, slug }) {
   const router = useRouter();
+  const { data } = useStore();
   const [currentPartIndex, setCurrentPartIndex] = useState(0);
 
-  // Lấy đúng bài học theo slug (nếu có)
+  // Chọn bài học theo slug (nếu có)
   const currentLesson = useMemo(() => {
-    if (slug) {
-      return data.find(
-        (item) =>
-          item.slug === slug ||
-          (item.slug && item.slug.toLowerCase() === slug.toLowerCase())
+    if (slug && data?.length) {
+      // Tìm lesson theo slug trong tất cả các unit
+      for (const unit of data) {
+        const found = unit.lessons?.find(
+          (lesson) =>
+            lesson.slug === `/${slug}` || // so sánh cả dạng có dấu /
+            lesson.slug === slug ||
+            (lesson.slug && lesson.slug.replace(/^\//, "") === slug)
+        );
+        if (found) return found;
+      }
+      return null;
+    }
+    return lessons || null;
+  }, [slug, data, lessons]);
+
+  // Làm phẳng danh sách câu hỏi
+  const questionParts = useMemo(() => {
+    if (!currentLesson) return [];
+
+    // Dạng dữ liệu 1: lessons có field questions
+    if (currentLesson.questions) {
+      return currentLesson.questions.flatMap((item) =>
+        item.types.map((type) => ({
+          type,
+          data: item.questions || [],
+        }))
       );
     }
-    return null;
-  }, [slug, data]);
 
-  // Nếu có slug, chỉ lấy các loại câu hỏi của bài học đó
-  const questionParts = useMemo(() => {
-    const lesson = currentLesson || data[0];
-    if (!lesson) return [];
-    return lesson.types.map((type, idx) => ({
-      id: idx + 1,
-      type,
-      data: lesson.question || [],
-    }));
-  }, [currentLesson, data]);
+    // Dạng dữ liệu 2: lesson có types và question
+    if (currentLesson.types) {
+      return currentLesson.types.map((type, idx) => ({
+        id: idx + 1,
+        type,
+        data: currentLesson.question || [],
+      }));
+    }
 
-  // Nếu không có slug, lấy toàn bộ các loại câu hỏi như cũ (nếu muốn)
-  // (Có thể bỏ qua nếu chỉ học theo từng bài)
+    return [];
+  }, [currentLesson]);
 
   const currentPart = questionParts[currentPartIndex];
 
-  // Khi hoàn thành phần học
   const handlePartComplete = () => {
-    if (slug) {
-      if (currentPartIndex < questionParts.length - 1) {
-        setCurrentPartIndex((prev) => prev + 1);
-      } else {
-        router.push("/learn");
-      }
-      return;
+    if (currentPartIndex < questionParts.length - 1) {
+      setCurrentPartIndex((prev) => prev + 1);
+    } else if (slug) {
+      router.push("/learn");
     }
-    setCurrentPartIndex((prev) => prev + 1);
   };
 
   if (!currentPart || !currentPart.data?.length) {
@@ -69,19 +86,31 @@ function QuestionPart({ slug }) {
     return <CompletePopup />;
   }
 
-  const renderCurrentPart = () => {
-    const ComponentMap = {
-      card: <CardQuestion questionData={currentPart.data} onComplete={handlePartComplete} />,
-      choiceQuestion: <ChoiceQuestion questionData={currentPart.data} onComplete={handlePartComplete} />,
-      choiceAudio: <ChoiceAudio questionData={currentPart.data} onComplete={handlePartComplete} />,
-      FillInTheBlank: <FillInTheBlank questionData={currentPart.data} onComplete={handlePartComplete} />,
-      writeAnswer: <WriteAnswer questionData={currentPart.data} onComplete={handlePartComplete} />,
-      matchQuestion: <MatchQuestion questionData={currentPart.data} onComplete={handlePartComplete} />,
-    };
-    return ComponentMap[currentPart.type] || <p>Không thể tải được câu hỏi.</p>;
+  const typeToComponentMap = {
+    Card: CardQuestion,
+    ChoiceQuestion: ChoiceQuestion,
+    ChoiceAudio: ChoiceAudio,
+    FillInTheBlank: FillInTheBlank,
+    WriteAnswer: WriteAnswer,
+    MatchQuestion: MatchQuestion,
+    Arrange: Arrange,
+    WriteSentence: WriteSentence,
   };
 
-  return <div className="p-5">{renderCurrentPart()}</div>;
+  const Component = typeToComponentMap[currentPart.type];
+
+  return (
+    <div className="p-5">
+      {Component ? (
+        <Component
+          questionData={currentPart.data}
+          onComplete={handlePartComplete}
+        />
+      ) : (
+        <p>Không thể tải được câu hỏi.</p>
+      )}
+    </div>
+  );
 }
 
 export default QuestionPart;

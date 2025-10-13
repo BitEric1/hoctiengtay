@@ -1,50 +1,95 @@
 "use client";
-import Image from "next/image";
 
-function Card({ count, title, image, audio, onClick, active }) {
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useRef } from "react";
+
+function Card({ count, title, image, audio, onClick, state = "default" }) {
+  const soundRef = useRef(null);
   const handleClick = () => {
     if (audio) {
-      const sound = new Audio(audio);
-      sound.play();
-    }
-    if (onClick) onClick();
+      if (!soundRef.current) {
+        soundRef.current = new Audio(audio);
+      } else {
+        soundRef.current.pause();
+        soundRef.current.currentTime = 0;
+      }
+
+      soundRef.current.play();
+
+    };
+    onClick?.();
+  }
+
+  // 🎨 style theo state
+  const stateStyles = {
+    default: {
+      border: "border-gray-300",
+      bg: "bg-white",
+      text: "text-gray-600",
+    },
+    active: {
+      border: "border-blue-500",
+      bg: "bg-blue-50",
+      text: "text-blue-600",
+    },
+    correct: {
+      border: "border-green-500",
+      bg: "bg-green-50",
+      text: "text-green-600",
+    },
+    wrong: {
+      border: "border-red-500",
+      bg: "bg-red-50",
+      text: "text-red-600",
+    },
+  };
+
+  const { border, bg, text } = stateStyles[state] || stateStyles.default;
+
+
+  const variants = {
+    idle: { x: 0, scale: 1 },
+    correct: {
+      scale: [1, 1.15, 1],
+      transition: { duration: 0.4, ease: "easeInOut" },
+    },
+    wrong: {
+      x: [0, -25, 25, -20, 20, 0],
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
   };
 
   return (
-    <div
+    <motion.div
+      className={`p-2 shadow-md flex flex-col rounded-[8px] cursor-pointer
+        hover:shadow-lg border-[3px] transition-all duration-300 ease-in-out hover:-translate-y-1
+        ${border} ${bg}`}
       onClick={handleClick}
-      className={`group relative flex flex-col items-center justify-between cursor-pointer rounded-xl border-[2px] border-transparent p-4 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 ${
-        active
-          ? "bg-blue-100 border-blue-500 shadow-blue-300"
-          : "bg-white hover:border-blue-400"
-      }`}
+      variants={variants}
+      initial="idle"
+      animate={
+        state === "correct" ? "correct" : state === "wrong" ? "wrong" : "idle"
+      }
     >
       <span
-        className={`absolute top-3 left-3 flex h-8 w-8 items-center justify-center rounded-md border text-sm font-semibold transition ${
-          active
-            ? "bg-blue-500 text-white border-blue-600"
-            : "bg-gray-100 text-gray-600 border-gray-300"
-        }`}
+        className={`p-3 border-gray-300 border w-[30px] h-[30px]
+        flex items-center justify-center rounded-[8px] font-medium ${text}`}
       >
         {count + 1}
       </span>
-
       <Image
         width={200}
         height={200}
-        className="object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
+        className="object-cover rounded-[8px] mt-2"
         src={image}
         alt={title}
+        loading="lazy"
       />
-
-      <span
-        className={`mt-3 text-lg font-bold text-center transition ${
-          active ? "text-blue-600" : "text-gray-700"
-        }`}
-      >
+      <span className={`flex justify-center p-3 font-bold text-lg ${text}`}>
         {title}
       </span>
-    </div>
+    </motion.div>
   );
 }
 

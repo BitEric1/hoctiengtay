@@ -1,5 +1,6 @@
 "use client";
 
+import LeftNavbar from "@/components/LeftNavbar";
 import {
     BookOpen,
     ChevronLeft,
@@ -12,6 +13,7 @@ import {
     Users,
     X,
 } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 /**
@@ -58,9 +60,10 @@ export default function AboutHocTiengTay() {
     }, [activeIndex]);
 
     return (
-        <div className="max-w-screen-xl my-24 relative w-full space-y-12 sm:space-y-16 mx-auto">
-            <HeroHeader />
-
+        <div className="mt-20 relative w-full space-y-12 sm:space-y-16 flex">
+            <LeftNavbar />
+            <div className="w-full px-10 pb-6 flex flex-col gap-4">
+            <HeroHeader />  
             {/* 1) Thành viên – đồng màu với hero */}
             <BlueSection
                 id="gioi-thieu-thanh-vien"
@@ -161,6 +164,9 @@ export default function AboutHocTiengTay() {
                     }
                 />
             )}
+
+            </div>
+
         </div>
     );
 }
@@ -174,7 +180,8 @@ function HeroHeader() {
             {/* Vệt sáng */}
             <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-white/25 blur-3xl" />
             <div className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full bg-sky-300/30 blur-3xl" />
-            <div className="flex items-center gap-4 px-6 py-10 sm:px-8 text-white">
+
+            <div className="flex items-center justify-between gap-4 px-6 py-10 sm:px-8 text-white">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 ring-1 ring-white/40">
                     <BookOpen className="h-6 w-6" />
                 </div>
@@ -191,6 +198,7 @@ function HeroHeader() {
                         trường/lớp, vai trò, kỹ năng).
                     </p>
                 </div>
+
             </div>
         </div>
     );

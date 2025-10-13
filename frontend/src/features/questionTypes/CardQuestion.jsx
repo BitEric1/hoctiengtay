@@ -1,7 +1,8 @@
-"use client";
-import Card from "@/components/Card";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import soundEffects from "../../../public/soundEffects";
+import { CheckButton, SkipButton } from "@/components/Button";
+import Card from "@/components/Card";
 import Link from "next/link";
 
 
@@ -11,85 +12,138 @@ function CardQuestion({ questionData, onComplete }) {
   const [usedIds, setUsedIds] = useState([]);
   const [currQues, setCurrQues] = useState(null);
   const [selected, setSelected] = useState(null);
-  const [checked, setChecked] = useState("default");
-  const [activeStyle, setActiveStyle] = useState(null);
+  const [answerState, setAnswerState] = useState("default"); // default | active | correct | wrong
+  const [activeId, setActiveId] = useState(null);
+  const [roundKey, setRoundKey] = useState(0);
 
-  function shuffle(array) {
-    let tmpArr = [...array];
-    for (let i = tmpArr.length - 1; i > 0; i--) {
+  const correctAudio = useRef(new Audio(soundEffects.correct));
+  const wrongAudio = useRef(new Audio(soundEffects.correct));
+
+  // Xáo trộn mảng
+  const shuffle = (array) => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [tmpArr[i], tmpArr[j]] = [tmpArr[j], tmpArr[i]];
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    return tmpArr;
-  }
+    return arr;
+  };
 
-  function generateRound() {
-    const unused = data.filter((item) => !usedIds.includes(item.id));
+  const generateRound = () => {
+    // Lọc các câu chưa dùng và khác câu hiện tại
+    const unused = data.filter(
+      (item) => !usedIds.includes(item.id) && item.id !== currQues?.correct.id
+    );
+
     if (unused.length === 0) {
       setCurrQues(null);
-      if (onComplete) onComplete();
+      onComplete?.();
       return;
     }
+
     const correct = unused[Math.floor(Math.random() * unused.length)];
+
     let others = data.filter((item) => item.id !== correct.id);
-    others = shuffle(others).slice(0, 2);
-    const options = shuffle([correct, ...others]);
-    setCurrQues({ correct, options });
-  }
+    others = shuffle(others).slice(0, Math.min(3, others.length));
+
+    const newQues = { correct, options: shuffle([correct, ...others]) };
+
+    setCurrQues(newQues);
+    setRoundKey((prev) => prev + 1);
+  };
+
+
+
 
   useEffect(() => {
-    if (Array.isArray(data) && data.length > 0) generateRound();
-  }, [data]);
+    if (data.length > 0 && currQues === null && usedIds.length < data.length) {
+      generateRound();
+    }
+  }, [data, currQues, usedIds]);
 
   const handleSelected = (id) => {
-    if (checked === "default") {
-      setActiveStyle(id);
+    if (answerState === "default" || answerState === "active") {
+      setActiveId(id);
       setSelected(id);
+      setAnswerState("active");
     }
   };
 
   const handleChecked = () => {
-    if (!selected) return;
+    if (!selected || !currQues) return;
+
     if (selected === currQues.correct.id) {
-      setChecked("correct");
+
+      setAnswerState("correct");
       setUsedIds((prev) => [...prev, currQues.correct.id]);
-      new Audio(soundEffects.correct).play();
+      correctAudio.current.play();
+
+      setTimeout(() => {
+        setAnswerState("default");
+        setSelected(null);
+        setActiveId(null);
+        setRoundKey((prev) => prev + 1);
+        generateRound();
+      }, 600);
     } else {
-      setChecked("wrong");
-      new Audio(soundEffects.wrong).play();
+      setAnswerState("wrong");
+      wrongAudio.current.play();
+
+      // auto highlight correct after 1s
+      setTimeout(() => {
+      }, 300);
     }
   };
 
   const handleRetry = () => {
-    setChecked("default");
+    setAnswerState("default");
     setSelected(null);
-    setActiveStyle(null);
+    setActiveId(null);
   };
 
+
+
   const handleSkip = () => {
-    setChecked("default");
-    setActiveStyle(null);
+    if (!currQues) return;
+    // nếu chưa chọn hoặc đang check sai/correct đều cho skip
+    setUsedIds((prev) => [...prev, currQues.correct.id]);
+    setAnswerState("default");
     setSelected(null);
+    setActiveId(null);
+    setRoundKey((prev) => prev + 1);
     generateRound();
   };
 
+  if (!currQues) return null;
+
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br px-4">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8 ">
-        {currQues ? (
-          <div>
-            <h1 className="text-3xl font-semibold text-center mb-8 text-gray-800">
+    <div className="flex items-center justify-center">
+      <div className="w-[900px] mx-auto">
+        <div className="my-4">
+          <Link href="/learn" className="cst_btn-danger" >Thoát</Link>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={roundKey}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="flex flex-col items-center gap-6 w-full"
+          >
+            <h1 className="text-[30px] text-center mb-[24px]">
               Đâu là{" "}
-              <span className="text-blue-700 font-bold">
+              <span className="font-bold text-blue-600">
                 {currQues.correct.nghiaTV}
               </span>
               ?
             </h1>
 
             <div
-              className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center transition ${
-                checked !== "default" ? "pointer-events-none opacity-80" : ""
-              }`}
+              className={`flex gap-5 justify-center transition ${answerState === "wrong" || answerState === "correct"
+                ? "pointer-events-none"
+                : ""
+                }`}
             >
               {currQues.options.map((ques, index) => (
                 <Card
@@ -99,61 +153,31 @@ function CardQuestion({ questionData, onComplete }) {
                   image={ques.img}
                   audio={ques.audio}
                   onClick={() => handleSelected(ques.id)}
-                  active={activeStyle === ques.id}
+                  state={
+                    activeId === ques.id
+                      ? answerState === "correct"
+                        ? "correct"
+                        : answerState === "wrong"
+                          ? "wrong"
+                          : "active"
+                      : "default"
+                  }
                 />
               ))}
             </div>
-          </div>
-        ) : (
-          <p className="text-center text-gray-600">Đã hoàn thành tất cả câu hỏi 🎉</p>
-        )}
-
-        <div
-          className={`mt-10 h-[140px] flex justify-center items-center gap-4 rounded-xl transition-all duration-500 ${
-            checked === "correct"
-              ? "bg-green-100"
-              : checked === "wrong"
-              ? "bg-red-100"
-              : "bg-blue-50"
-          }`}
-        >
-          <Link href="/learn" className="block cst_btn" >
-              Quay lại
-          </Link>
-
-
-          {checked === "wrong" && (
-            <button
-              className="cst_btn-danger"
-              onClick={handleRetry}
-            >
-              Thử lại
-            </button>
-          )}
-
-          {checked === "correct" && (
-            <button
-              className="cst_btn-success"
-              onClick={handleSkip}
-            >
-              Tiếp tục
-            </button>
-          )}
-
-          {checked === "default" && (
-            <button
-              onClick={handleChecked}
-              disabled={!selected}
-              className={`px-8 py-3 rounded-lg font-semibold shadow-md transition-all ${
-                !selected
-                  ? "cst_btn"
-                  : "cst_btn-primary"
-              }`}
-            >
-              Kiểm tra
-            </button>
-          )}
-        </div>
+            
+            <div className="p-4 flex justify-between w-full max-w-md">
+              <SkipButton onSkip={handleSkip} disabled={answerState === "correct"} />
+              <CheckButton
+                onCheck={handleChecked}
+                onRetry={handleRetry}
+                onSkip={handleSkip}
+                state={answerState}
+                disabled={!selected}
+              />
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

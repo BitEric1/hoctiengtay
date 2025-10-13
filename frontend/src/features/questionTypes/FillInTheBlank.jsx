@@ -6,8 +6,6 @@ import AnswerItem from "@/components/AnswerItem";
 import { CheckButton } from "@/components/Button";
 import Link from "next/link";
 
-
-
 function FillInTheBlank({ questionData = [], onComplete }) {
   const data = questionData;
 
@@ -83,9 +81,7 @@ function FillInTheBlank({ questionData = [], onComplete }) {
       const newAudio = new Audio(newQ.audio);
       audioRef.current = newAudio;
       setTimeout(() => {
-        audioRef.current
-          ?.play()
-          .catch(() => console.log("Autoplay bị chặn"));
+        audioRef.current?.play().catch(() => console.log("Autoplay bị chặn"));
       }, 500);
     }
   };
@@ -126,6 +122,11 @@ function FillInTheBlank({ questionData = [], onComplete }) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-4 relative overflow-hidden">
+      <div className="flex justify-start w-full">
+        <Link href="/learn" className="cst_btn-danger">
+          Thoát
+        </Link>
+      </div>
       <AnimatePresence mode="wait">
         <motion.div
           key={question.id}
@@ -183,17 +184,12 @@ function FillInTheBlank({ questionData = [], onComplete }) {
 
           {/* Nút kiểm tra */}
           <div className="flex items-center gap-4">
-            <Link href="/learn" className="block cst_btn" >
-                Quay lại
-            </Link>
-
             <CheckButton
               state={checked}
               onCheck={handleChecked}
               disabled={!selected || isTransitioning}
               onRetry={handleRetry}
             />
-
           </div>
         </motion.div>
       </AnimatePresence>

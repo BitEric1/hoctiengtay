@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { correct_sound, wrong_sound, wosh_sound } from "../../../../public/soundEffects";
-import CheckButton from "../../../components/CheckButton/CheckButton";
+
+
 import { FaVolumeUp } from "react-icons/fa";
+import { CheckButton } from "@/components/Button";
 
 function WriteSentence() {
   const correctSentence = {
@@ -76,9 +77,8 @@ function WriteSentence() {
 
   return (
     <div
-      className={`flex mx-auto flex-col items-center gap-5 justify-center w-[300px] transition-all duration-500 ease-in-out ${
-        isTransitioning ? "opacity-50 pointer-events-none" : "opacity-100"
-      }`}
+      className={`flex mx-auto flex-col items-center gap-5 justify-center w-[300px] transition-all duration-500 ease-in-out ${isTransitioning ? "opacity-50 pointer-events-none" : "opacity-100"
+        }`}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -92,13 +92,12 @@ function WriteSentence() {
           {/* Câu hỏi + Loa */}
           <div className="flex items-center gap-3">
             <h2
-              className={`text-2xl font-bold text-center leading-snug transition-colors ${
-                checked === "wrong"
-                  ? "text-red-600"
-                  : checked === "correct"
+              className={`text-2xl font-bold text-center leading-snug transition-colors ${checked === "wrong"
+                ? "text-red-600"
+                : checked === "correct"
                   ? "text-green-600"
                   : "text-gray-800"
-              }`}
+                }`}
             >
               {correctSentence.ques}
             </h2>
@@ -118,13 +117,12 @@ function WriteSentence() {
             onChange={(e) => setUserAnswer(e.target.value)}
             disabled={checked !== "default"}
             placeholder="Nhập câu trả lời của bạn..."
-            className={`w-full text-center border-2 rounded-xl px-4 py-3 text-lg outline-none transition-all duration-300 ${
-              checked === "wrong"
-                ? "border-red-400 bg-red-50 text-red-600"
-                : checked === "correct"
+            className={`w-full text-center border-2 rounded-xl px-4 py-3 text-lg outline-none transition-all duration-300 ${checked === "wrong"
+              ? "border-red-400 bg-red-50 text-red-600"
+              : checked === "correct"
                 ? "border-green-400 bg-green-50 text-green-600"
                 : "border-blue-300 bg-blue-50 focus:border-blue-500"
-            }`}
+              }`}
           />
 
           {/* Nút điều khiển */}
