@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { RiBookShelfFill } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
+import MobileNavbar from "./MobileNavbar";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -32,7 +33,7 @@ const Header = () => {
     <header className="w-full h-20 shadow-lg fixed top-0 left-0 bg-gradient-to-l from-blue-400 via-blue-500 to-blue-600  z-50">
       <div className="w-full max-w-screen-xl mx-auto h-full flex items-center justify-between px-4 ">
         {/* Logo/Title Section */}
-        <div className="w-auto h-20 flex items-center justify-center">
+        <div className="w-full lg:w-3/12 h-20 flex items-center justify-center">
           <Link
             href="/learn"
             className="text-xl lg:text-2xl text-white font-bold h-20 flex items-center justify-center"
@@ -77,6 +78,7 @@ const Header = () => {
           )}
         </div> */}
       </div>
+      <MobileNavbar />
     </header>
   );
 };

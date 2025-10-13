@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Header";
 import {
   BookOpen,
   ChevronLeft,
@@ -127,93 +128,96 @@ export default function HomeHocTiengTay() {
 
 function Hero({ tab, setTab }) {
   return (
-    <div className="mt-20 relative h-[75vh] min-h-[460px] w-full overflow-hidden rounded-b-[36px]">
-      {/* Background image + gradient tone lam */}
-      <img
-        src="https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/1/18/0beb34cf1fd74195b58660ea6c59b5d4"
-        alt="cover"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.25)_0%,rgba(2,6,23,0.45)_40%,rgba(37,99,235,0.6)_75%,rgba(96,165,250,0.8)_100%)]" />
+    <>
+      <Header />
+      <div className="mt-20 relative h-[75vh] min-h-[460px] w-full overflow-hidden rounded-b-[36px]">
+        {/* Background image + gradient tone lam */}
+        <img
+          src="https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/1/18/0beb34cf1fd74195b58660ea6c59b5d4"
+          alt="cover"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.25)_0%,rgba(2,6,23,0.45)_40%,rgba(37,99,235,0.6)_75%,rgba(96,165,250,0.8)_100%)]" />
 
-      <div className="relative mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 text-center text-white">
-        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
-          Cùng học Tiếng Tày – gìn giữ bản sắc
-        </h1>
-        <p className="mt-3 max-w-2xl text-white/95">
-          Khám phá ngôn ngữ, làn điệu và câu chuyện văn hoá địa phương
-          qua bài học tương tác và kho tư liệu số hoá.
-        </p>
+        <div className="relative mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 text-center text-white">
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+            Cùng học Tiếng Tày – gìn giữ bản sắc
+          </h1>
+          <p className="mt-3 max-w-2xl text-white/95">
+            Khám phá ngôn ngữ, làn điệu và câu chuyện văn hoá địa phương
+            qua bài học tương tác và kho tư liệu số hoá.
+          </p>
 
-        {/* Segmented Tabs */}
-        <div className="mt-10 inline-flex rounded-2xl bg-white/20 p-3 1 ring-white/40 backdrop-blur">
-          <Link
-            href="/learn"
-            className="cst_btn-primary block text-center text-xl"
-          >
-            Bắt đầu học
-          </Link>
-          {/* {[
-                        { k: "learn", label: "Bài học" },
-                        { k: "dictionary", label: "Từ điển" },
-                        { k: "culture", label: "Văn hoá" },
-                    ].map((i) => (
-                        <button
-                            key={i.k}
-                            onClick={() => setTab(i.k)}
-                            className={`px-4 py-2 text-sm font-semibold rounded-xl transition ${
-                                tab === i.k
-                                    ? "bg-white text-[#0b1a3a]"
-                                    : "text-white"
-                            }`}
-                        >
-                            {i.label}
-                        </button>
-                    ))} */}
+          {/* Segmented Tabs */}
+          <div className="mt-10 inline-flex rounded-2xl bg-white/20 p-3 1 ring-white/40 backdrop-blur">
+            <Link
+              href="/learn"
+              className="cst_btn-primary block text-center text-xl"
+            >
+              Bắt đầu học
+            </Link>
+            {/* {[
+                          { k: "learn", label: "Bài học" },
+                          { k: "dictionary", label: "Từ điển" },
+                          { k: "culture", label: "Văn hoá" },
+                      ].map((i) => (
+                          <button
+                              key={i.k}
+                              onClick={() => setTab(i.k)}
+                              className={`px-4 py-2 text-sm font-semibold rounded-xl transition ${
+                                  tab === i.k
+                                      ? "bg-white text-[#0b1a3a]"
+                                      : "text-white"
+                              }`}
+                          >
+                              {i.label}
+                          </button>
+                      ))} */}
+          </div>
+
+          {/* Quick Panel under tabs */}
+          {/* <div className="mt-4 w-full max-w-3xl rounded-2xl bg-white/90 p-3 text-left text-[#0b1a3a] shadow-xl">
+                      {tab === "learn" && (
+                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                              <Input label="Chủ đề" placeholder="Chào hỏi…" />
+                              <Input
+                                  label="Mức độ"
+                                  placeholder="Cơ bản/Trung bình…"
+                              />
+                              <Primary>Vào học</Primary>
+                          </div>
+                      )}
+                      {tab === "dictionary" && (
+                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
+                              <Input
+                                  label="Tra từ"
+                                  placeholder="Nhập từ Tiếng Tày hoặc Việt"
+                              />
+                              <Primary>Tra cứu</Primary>
+                          </div>
+                      )}
+                      {tab === "culture" && (
+                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
+                              <Input
+                                  label="Tìm tư liệu"
+                                  placeholder="dân ca, trang phục, ẩm thực…"
+                              />
+                              <Primary>Xem ngay</Primary>
+                          </div>
+                      )}
+                  </div> */}
         </div>
 
-        {/* Quick Panel under tabs */}
-        {/* <div className="mt-4 w-full max-w-3xl rounded-2xl bg-white/90 p-3 text-left text-[#0b1a3a] shadow-xl">
-                    {tab === "learn" && (
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                            <Input label="Chủ đề" placeholder="Chào hỏi…" />
-                            <Input
-                                label="Mức độ"
-                                placeholder="Cơ bản/Trung bình…"
-                            />
-                            <Primary>Vào học</Primary>
-                        </div>
-                    )}
-                    {tab === "dictionary" && (
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
-                            <Input
-                                label="Tra từ"
-                                placeholder="Nhập từ Tiếng Tày hoặc Việt"
-                            />
-                            <Primary>Tra cứu</Primary>
-                        </div>
-                    )}
-                    {tab === "culture" && (
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
-                            <Input
-                                label="Tìm tư liệu"
-                                placeholder="dân ca, trang phục, ẩm thực…"
-                            />
-                            <Primary>Xem ngay</Primary>
-                        </div>
-                    )}
-                </div> */}
+        {/* wave divider */}
+        <svg
+          className="absolute bottom-[-1px] left-0 right-0 w-full text-[#eaf3ff]"
+          viewBox="0 0 1440 80"
+          fill="currentColor"
+        >
+          <path d="M0,64L60,58.7C120,53,240,43,360,58.7C480,75,600,117,720,122.7C840,128,960,96,1080,69.3C1200,43,1320,21,1380,10.7L1440,0L1440,80L1380,80C1320,80,1200,80,1080,80C960,80,840,80,720,80C600,80,480,80,360,80C240,80,120,80,60,80L0,80Z" />
+        </svg>
       </div>
-
-      {/* wave divider */}
-      <svg
-        className="absolute bottom-[-1px] left-0 right-0 w-full text-[#eaf3ff]"
-        viewBox="0 0 1440 80"
-        fill="currentColor"
-      >
-        <path d="M0,64L60,58.7C120,53,240,43,360,58.7C480,75,600,117,720,122.7C840,128,960,96,1080,69.3C1200,43,1320,21,1380,10.7L1440,0L1440,80L1380,80C1320,80,1200,80,1080,80C960,80,840,80,720,80C600,80,480,80,360,80C240,80,120,80,60,80L0,80Z" />
-      </svg>
-    </div>
+    </>
   );
 }
 

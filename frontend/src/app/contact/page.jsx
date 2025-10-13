@@ -10,10 +10,10 @@ const page = () => {
       toast.info("Chức năng này hiện đang phát triển! Cùng đón chờ nhé");
     }  
   return (
-    <div className="w-full h-screen flex mt-20">
+    <div className="w-full h-screen flex lg:mt-20 mt-[120px]">
       <LeftNavbar />
       <div className="w-full   py-4">
-        <div className="w-5/12 mx-auto my-10 bg-white shadow-lg rounded-xl p-8">
+        <div className="w-full lg:w-5/12 mx-auto my-10 bg-white shadow-lg rounded-xl py-8 px-4">
           <h2 className="text-2xl font-bold text-center text-blue-500 mb-6">
             Liên hệ với chúng tôi
           </h2>
@@ -70,13 +70,15 @@ const page = () => {
           </div>
 
           {/* Nút gửi */}
-          <button
-            type="submit"
-            onClick={onSubmit}
-            className="cst_btn-primary"
-          >
-            Gửi liên hệ
-          </button>
+          <div className="w-full flex items-center justify-center">
+            <button
+              type="submit"
+              onClick={onSubmit}
+              className="cst_btn-primary"
+            >
+              Gửi liên hệ
+            </button>
+          </div>
         </div>
       </div>
       

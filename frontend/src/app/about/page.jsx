@@ -60,9 +60,9 @@ export default function AboutHocTiengTay() {
     }, [activeIndex]);
 
     return (
-        <div className="mt-20 relative w-full space-y-12 sm:space-y-16 flex">
+        <div className="lg:mt-20 mt-[120px] relative w-full space-y-12 sm:space-y-16 flex">
             <LeftNavbar />
-            <div className="w-full px-10 pb-6 flex flex-col gap-4">
+            <div className="w-full p-2 flex flex-col gap-2">
             <HeroHeader />  
             {/* 1) Thành viên – đồng màu với hero */}
             <BlueSection

@@ -5,9 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 import { AuthProvider } from "@/context/authContext";
-import Header from "@/components/Header";
+
 import { StoreProvider } from "@/context/StoreCoursesContext";
 import MobileNavbar from "@/components/MobileNavbar";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,8 +44,8 @@ export default function RootLayout({ children }) {
           theme="light"
           />
         <StoreProvider>
-          <MobileNavbar />
           <Header />
+          <MobileNavbar />
           {children}
           
           </StoreProvider>

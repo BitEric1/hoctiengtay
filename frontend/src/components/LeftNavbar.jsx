@@ -1,21 +1,22 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaExchangeAlt, FaUser } from "react-icons/fa";
-import { FaPhone } from "react-icons/fa6";
-import { GiNotebook } from "react-icons/gi";
+
+import { FaBookAtlas, FaPhone } from "react-icons/fa6";
+
+import { LuFileText, LuNotebookPen } from "react-icons/lu";
 
 const navbarList = [
     {
         id: 1,
         text: "Bài học",
-        icon: <GiNotebook size={20} />,
+        icon: <LuNotebookPen size={20} />,
         link: "/learn",
     },
     {
         id: 2,
         text: "Từ điển",
-        icon: <FaExchangeAlt size={20} />,
+        icon: <FaBookAtlas size={20} />,
         link: "/translate",
     },
     {
@@ -27,7 +28,7 @@ const navbarList = [
     {
         id: 4,
         text: "Về chúng tôi",
-        icon: <FaUser size={20} />,
+        icon: <LuFileText size={20} />,
         link: "/about",
     },
 ];

@@ -10,7 +10,7 @@ import LessonButton from "@/components/LessonButton";
 export default function Home() {
   const { data } = useStore();
   return (
-    <div className="lg:flex block mt-20">
+    <div className="lg:flex block lg:mt-20 mt-[120px]">
       <LeftNavbar />
       <div className="sm:w-full md:w-6/12 lg:w-7/12 h-full  lg:px-24 pb-6 px-4 ">
         {data.map((unit) => (
@@ -19,11 +19,11 @@ export default function Home() {
                 className="w-full bg-gradient-to-l from-blue-400 to-blue-600 text-white shadow-md rounded-xl p-4 flex items-center justify-center mt-1">
                 <div className="flex items-center justify-center gap-3 mb-2">
                     <FaBookmark size={30} />
-                    <h1 className="text-3xl font-bold">{unit.title}</h1>
+                    <h1 className="text-xl lg:text-3xl font-bold">{unit.title}</h1>
                 </div>
             </div>
 
-            <ul className="flex flex-col gap-4 mt-6 pl-48">
+            <ul className="flex flex-col gap-2 mt-6">
                 {unit.lessons.map((lesson) => (
                     <li key={lesson.id} className="mb-2">
                         <LessonButton

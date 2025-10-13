@@ -99,9 +99,9 @@ export default function TranslatePage() {
     );
 
     return (
-        <div className="bg-gray-50 min-h-screen mt-20 flex">
+        <div className="bg-gray-50 min-h-screen lg:mt-20 mt-[120px] flex">
             <LeftNavbar />
-            <main className="w-8/12 mx-auto  p-4 md:p-6 lg:p-8 font-sans">
+            <main className="w-full lg:w-8/12 mx-auto px-2 py-8 md:p-6 lg:p-8 font-sans">
                 <header className="text-center mb-8">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
                         Dịch Tày ↔ Việt

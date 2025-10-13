@@ -1,51 +1,43 @@
-// filepath: src/components/MobileNavbar.jsx
 "use client";
-import Link from "next/link";
-
-import { usePathname } from "next/navigation";
-import { FaExchangeAlt, FaPhone } from "react-icons/fa";
-import { GiNotebook } from "react-icons/gi";
-
-const navbarList = [
-  {
-    id: 1,
-    text: "Bài học",
-    icon: <GiNotebook size={20} />,
-    link: "/learn",
-  },
-  {
-    id: 2,
-    text: "Từ điển",
-    icon: <FaExchangeAlt size={20} />,
-    link: "/translate",
-  },
-  {
-    id: 3,
-    text: "Liên hệ",
-    icon: <FaPhone size={20} />,
-    link: "/contact",
-  },
+import { usePathname, useRouter } from "next/navigation";
+import { FaHome  } from "react-icons/fa";
+import { LuNotebookPen } from "react-icons/lu";
+import { FaBookAtlas } from "react-icons/fa6";
+import { FaPhone } from "react-icons/fa6";
+import { LuFileText } from "react-icons/lu";
+const navItems = [
+  { icon: FaHome, path: "/", label: "Home" },
+  { icon: LuNotebookPen, path: "/learn", label: "Learn" },
+  { icon: FaBookAtlas, path: "/translate", label: "Translate" },
+  { icon: FaPhone, path: "/contact", label: "Contact" },
+  { icon: LuFileText, path: "/about", label: "About" },
 ];
 
-const MobileNavbar = () => {
-  const pathName = usePathname();
+export default function MobileNavbar() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
-    <nav className="flex lg:hidden w-full bg-white border-b-2 border-gray-200 fixed top-0 left-0 z-40 h-14">
-      <ul className="flex w-full justify-around items-center h-full">
-        {navbarList.map((item) => (
-          <li key={item.id}>
-            <Link
-              href={item.link}
-              className={`flex flex-col items-center text-xs ${pathName === item.link ? "text-blue-600 font-bold" : "text-gray-600"}`}
-            >
-              {item.icon}
-              <span>{item.text}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <nav className="fixed top-20 left-0 right-0 bg-white border-b-2 text-gray-900 flex justify-around items-center py-2 border-gray-400 z-50 md:hidden">
+      {navItems.map((item) => {
+        const Icon = item.icon;
+        const active = pathname === item.path;
+
+        return (
+          <button
+            key={item.path}
+            onClick={() => router.push(item.path)}
+            className="flex flex-col items-center focus:outline-none"
+          >
+            <Icon className={`text-2xl ${active ? "text-blue-500" : "text-gray-400"}`} />
+            <div
+              className={`h-[2px] mt-1 rounded-full transition-all ${
+                active ? "bg-blue-500 w-6" : "bg-transparent w-0"
+              }`}
+            />
+          </button>
+        );
+      })}
     </nav>
   );
-};
-
-export default MobileNavbar;
+}
