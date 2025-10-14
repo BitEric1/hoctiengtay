@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="lg:flex block lg:mt-20 mt-[120px]">
       <LeftNavbar />
-      <div className="sm:w-full md:w-6/12 lg:w-7/12 h-full  lg:px-24 pb-6 px-4 ">
+      <div className="sm:w-full md:w-full  lg:w-7/12 h-full  lg:px-24 py-6 md:px-4 ">
         {data.map((unit) => (
           <div className="w-full p-4" key={unit.id}>
             <div
@@ -23,7 +23,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <ul className="flex flex-col gap-2 mt-6">
+            <ul className="w-full grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-x-10 lg:gap-x-24 gap-y-4  mt-6">
                 {unit.lessons.map((lesson) => (
                     <li key={lesson.id} className="mb-2">
                         <LessonButton

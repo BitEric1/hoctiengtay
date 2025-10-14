@@ -3,10 +3,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { FaBookAtlas, FaPhone } from "react-icons/fa6";
-
+import { FaHome  } from "react-icons/fa";
 import { LuFileText, LuNotebookPen } from "react-icons/lu";
 
 const navbarList = [
+    {
+        id: 0,
+        text: "Trang chủ",
+        icon: <FaHome size={20} />,
+        link: "/",
+    },
     {
         id: 1,
         text: "Bài học",

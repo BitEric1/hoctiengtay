@@ -5,11 +5,12 @@ import React, { useState, useEffect } from "react";
 import { RiBookShelfFill } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import MobileNavbar from "./MobileNavbar";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const { user, logout } = useAuth();
   const [showLoginButton, setShowLoginButton] = useState(false);
-
+  const path = usePathname();
   const handleScroll = () => {
     if (window.scrollY > window.innerHeight) {
       setShowLoginButton(true);
@@ -31,9 +32,9 @@ const Header = () => {
 
   return (
     <header className="w-full h-20 shadow-lg fixed top-0 left-0 bg-gradient-to-l from-blue-400 via-blue-500 to-blue-600  z-50">
-      <div className="w-full max-w-screen-xl mx-auto h-full flex items-center justify-between px-4 ">
+      <div className="w-full h-full flex items-center justify-between ">
         {/* Logo/Title Section */}
-        <div className="w-full lg:w-3/12 h-20 flex items-center justify-center">
+        <div className="w-full lg:w-2/12 h-20 flex items-center justify-center">
           <Link
             href="/learn"
             className="text-xl lg:text-2xl text-white font-bold h-20 flex items-center justify-center"
@@ -42,7 +43,20 @@ const Header = () => {
             HoctiengTày.edu
           </Link>
         </div>
-
+        <div className="hidden lg:w-3/12 h-20 lg:flex items-center justify-center gap-4">
+        <Link
+                href="/"
+                className={`" ${path === '/' ? "hidden " : "block" }  cst_btn block h-[48px] "`}
+              >
+                Khám phá
+        </Link>
+        <Link
+                href="/courses"
+                className={`" ${path === '/' ? "hidden " : "block" }  cst_btn block h-[48px] "`}
+              >
+                Các khoá học
+        </Link>
+        </div>
         {/* User info / Login button */}
         {/* <div className="hidden lg:flex w-auto h-full items-center justify-end relative group">
           {user ? (

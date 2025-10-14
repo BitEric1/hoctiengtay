@@ -10,4 +10,5 @@ import img9 from './img9.png'
 import img10 from './img10.png'
 import banner2 from './banner2.jpg'
 import banner from './hinhanhbanner-hd.jpg'
-export {img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,banner2,banner}
+import avatar from './avatar.jpg'
+export {img1, img2, img3, img4, img5, img6, img7, img8, img9, img10,banner2,banner,avatar}

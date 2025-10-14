@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { GiWhiteBook } from "react-icons/gi";
-import { FaPencilAlt, FaStar } from "react-icons/fa";
+"use client"
+
+import { FaStar } from "react-icons/fa";
 import Link from "next/link";
-import { FaBook } from "react-icons/fa6";
+import { useState } from "react";
+import { MdMenuBook } from "react-icons/md";
 
 function LessonButton({ lessons }) {
   const [activeLesson, setActiveLesson] = useState(null);
-
+  const progress = 0;
   const currentLesson = activeLesson === lessons.id ? lessons : null;
 
   return (
@@ -15,10 +16,19 @@ function LessonButton({ lessons }) {
       <div className="relative group flex items-center justify-center">
         {/* Nút mở modal */}
         <button
-          className="cst_btn-primary w-[120px] flex items-center justify-center"
+          className="cst_btn w-full flex items-center justify-between gap-4 py-4"
           onClick={() => setActiveLesson(lessons.id)}
         >
-          <FaPencilAlt size={30} />
+          <MdMenuBook size={30} />
+          <div className="relative w-full bg-gray-100 h-4 rounded-full overflow-hidden">
+          <div
+            className="absolute left-0 top-0 h-full bg-gradient-to-l from-blue-400 via-blue-500 to-blue-600 "
+            style={{ width: `${progress}%` }}
+          ></div>
+          <span className=" text-black/85 absolute inset-0 flex items-center justify-end px-4 text-xs font-bold  border-[1.8px] border-gray-300">
+            {progress}%
+          </span>
+        </div>
         </button>
 
         

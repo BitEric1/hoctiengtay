@@ -18,7 +18,7 @@ export default function MobileNavbar() {
   const router = useRouter();
 
   return (
-    <nav className="fixed top-20 left-0 right-0 bg-white border-b-2 text-gray-900 flex justify-around items-center py-2 border-gray-400 z-50 md:hidden">
+    <nav className="fixed top-20 left-0 right-0 bg-white border-b-2 text-gray-900 flex justify-around items-center py-1 border-gray-400 z-50 lg:hidden">
       {navItems.map((item) => {
         const Icon = item.icon;
         const active = pathname === item.path;
@@ -27,14 +27,11 @@ export default function MobileNavbar() {
           <button
             key={item.path}
             onClick={() => router.push(item.path)}
-            className="flex flex-col items-center focus:outline-none"
+            
+            className={` ${active ? " bg-black/10" : "text-gray-400"} flex items-center justify-center focus:outline-none w-10 h-10 rounded-full transition-all duration-300 ease-linear `}
           >
-            <Icon className={`text-2xl ${active ? "text-blue-500" : "text-gray-400"}`} />
-            <div
-              className={`h-[2px] mt-1 rounded-full transition-all ${
-                active ? "bg-blue-500 w-6" : "bg-transparent w-0"
-              }`}
-            />
+            <Icon className={` ${active ? "text-blue-500 " : "text-gray-400"}`}  size={22}/>
+            
           </button>
         );
       })}

@@ -15,13 +15,36 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-
+import { avatar } from "@/assets/imgs";
 /**
  * AboutHocTiengTay – màu dưới = màu trên (gradient lam #2563eb → #60a5fa)
  * - Card thành viên bằng nhau
  * - Modal 2 cột: ảnh lớn nửa trái, thông tin nửa phải
  * - Đã fix lỗi Unexpected token (loại bỏ `}}}` thừa ở FeatureCard/StepCard)
  */
+
+const navbarList = [
+    {
+        id: 0,
+        text: "Trang chủ",
+        link: "/",
+    },
+    {
+        id: 1,
+        text: "Bài học",
+        link: "/learn",
+    },
+    {
+        id: 2,
+        text: "Từ điển",
+        link: "/translate",
+    },
+    {
+        id: 3,
+        text: "Liên hệ",
+        link: "/contact",
+    },
+];
 
 export default function AboutHocTiengTay() {
     const [activeIndex, setActiveIndex] = useState(null);
@@ -61,8 +84,17 @@ export default function AboutHocTiengTay() {
 
     return (
         <div className="lg:mt-20 mt-[120px] relative w-full space-y-12 sm:space-y-16 flex">
-            <LeftNavbar />
-            <div className="w-full p-2 flex flex-col gap-2">
+            
+            <div className="w-full lg:max-w-screen-xl lg:mx-auto p-2 flex flex-col gap-2">
+            <div className="hidden w-full h-20 lg:flex items-center justify-center gap-4">
+                {
+                    navbarList.map(btn => (
+                        <Link href={btn.link} className="cst_btn" key={btn.id}>
+                            {btn.text}
+                        </Link>
+                    ))
+                }
+            </div>
             <HeroHeader />  
             {/* 1) Thành viên – đồng màu với hero */}
             <BlueSection
@@ -186,16 +218,14 @@ function HeroHeader() {
                     <BookOpen className="h-6 w-6" />
                 </div>
                 <div>
-                    <p className="mb-1 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ring-1 ring-white/40">
+                    <p className="mb-1 inline-flex items-center justify-end gap-2 rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ring-1 ring-white/40">
                         <Sparkles className="h-4 w-4" /> Học Tiếng Tày
                     </p>
                     <h1 className="text-2xl font-black sm:text-3xl">
                         Giới thiệu thành viên
                     </h1>
                     <p className="mt-1 max-w-[70ch] text-white/95">
-                        5 người – 5 cá tính. Card đồng đều, khi ấn sẽ mở ảnh lớn
-                        nửa trái và thông tin cơ bản nửa phải (tên, tuổi,
-                        trường/lớp, vai trò, kỹ năng).
+                        5 người – 5 cá tính
                     </p>
                 </div>
 
@@ -283,58 +313,58 @@ function StepCard({ title, desc, step }) {
 const members = [
     {
         id: "m1",
-        name: "Bit Eric",
-        age: 22,
-        school: "ĐH CNTT",
-        role: "Lead / Full‑stack",
-        avatar: "https://i.pravatar.cc/300?img=12",
-        quote: "Build nhanh – scale mượt.",
-        skills: ["Next.js", "Express", "MongoDB", "Tailwind"],
-        bio: "Phụ trách kiến trúc FE/BE, DevOps, thiết kế hệ thống câu hỏi và tiến trình học.",
+        name: "Hoàng Văn Bít",
+        age: 21,
+        school: "Cao Đẳng Lạng Sơn",
+        role: "Backend Developer",
+        avatar: avatar.src,
+        quote: "Dữ liệu sạch – API mượt.",
+        skills: ["NEXT.JS", "Express", "MongoDB", "Tailwind"],
+        bio: "Phụ trách kiến trúc BE, DevOps, Tạo API.",
     },
     {
         id: "m2",
-        name: "Thuỳ Hoàng",
+        name: "Lâm Thị Loan",
         age: 21,
-        school: "ĐH Kiến Trúc",
+        school: "Cao Đẳng Lạng Sơn",
         role: "UI/UX & Motion",
-        avatar: "https://i.pravatar.cc/300?img=47",
+        avatar: avatar.src,
         quote: "Đẹp và dễ dùng mới là chuẩn.",
-        skills: ["Figma", "Motion", "Design System"],
+        skills: ["Figma", "Motion", "Thiết kế giao diện"],
         bio: "Thiết kế giao diện, tương tác, guideline màu sắc và trải nghiệm học.",
     },
     {
         id: "m3",
-        name: "Hà My",
-        age: 20,
-        school: "CĐSP Thái Nguyên",
+        name: "Dương Thị Sáng",
+        age: 21,
+        school: "Cao Đẳng Lạng Sơn",
         role: "Nội dung Tiếng Tày",
-        avatar: "https://i.pravatar.cc/300?img=24",
+        avatar: avatar.src,
         quote: "Ngôn ngữ sống khi ta dùng hằng ngày.",
         skills: ["Biên soạn", "Thu âm", "Kiểm định"],
         bio: "Xây ngân hàng từ vựng, câu thoại, ví dụ, ghi âm phát âm chuẩn.",
     },
     {
         id: "m4",
-        name: "Minh Đức",
-        age: 23,
-        school: "ĐH Bách Khoa",
-        role: "Backend & Data",
-        avatar: "https://i.pravatar.cc/300?img=21",
-        quote: "Dữ liệu sạch – API mượt.",
-        skills: ["Node", "Mongoose", "Redis"],
-        bio: "Thiết kế schema, tối ưu API, caching, bảo mật và logging.",
+        name: "Hứa Hùng Đệ",
+        age: 24,
+        school: "Cao Đẳng Lạng Sơn",
+        role: "Tester",
+        avatar: avatar.src,
+        quote: "Build phải nhanh – chạy phải mượt, anh thấy chỗ này chưa wow Quý à",
+        skills: ["NEXT.JS",'Tailwindcss',"Redis","Kiểm Định Trò chơi"],
+        bio: "Phụ trách kiểm thử sản phẩm, đưa ra hướng đi và thiết kế hệ thống câu hỏi",
     },
     {
         id: "m5",
-        name: "Khánh Linh",
+        name: "Nguyễn Bỉnh Quý",
         age: 21,
-        school: "HV Báo chí",
-        role: "Growth & Community",
-        avatar: "https://i.pravatar.cc/300?img=32",
-        quote: "Lan toả từ lớp học đến cộng đồng.",
-        skills: ["Social", "Content", "Partnership"],
-        bio: "Kế hoạch truyền thông, hợp tác trường lớp, CLB và KOL địa phương.",
+        school: "Cao Đẳng Lạng Sơn",
+        role: "Frontend Developer",
+        avatar: avatar.src,
+        quote: "Code chạy được thì đừng bắt sửa ",
+        skills: ["NEXT.JS",'Tailwindcss'],
+        bio: "Phụ trách kiến trúc FE, thiết kế hệ thống câu hỏi và tiến trình học.",
     },
 ];
 
