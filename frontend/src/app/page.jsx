@@ -16,6 +16,7 @@ import danca from "@/assets/imgs/dan_ca.jpg";
 import vanhoa from "@/assets/imgs/vanhoa.jpg";
 import vanhoa2 from "@/assets/imgs/vanhoa2.jpg";
 import vanhoa3 from "@/assets/imgs/vanhoa3.jpg";
+import Loading from "./loading";
 
 /**
  * 
@@ -26,6 +27,10 @@ import vanhoa3 from "@/assets/imgs/vanhoa3.jpg";
 
 export default function HomeHocTiengTay() {
   const [tab, setTab] = useState("learn"); // learn | dictionary | culture
+ 
+  // const [isLoading, setIsLoading] = useState(true);
+
+
   const featured = useMemo(
     () => [
       {
@@ -64,6 +69,8 @@ export default function HomeHocTiengTay() {
     []
   );
 
+  
+
   // simple marquee for cultural patterns
   useEffect(() => {
     const id = setInterval(() => {
@@ -72,6 +79,15 @@ export default function HomeHocTiengTay() {
     }, 20);
     return () => clearInterval(id);
   }, []);
+
+
+  // useEffect(() => {
+  //   // Giả lập call API
+  //   const t = setTimeout(() => setIsLoading(false), 600);
+  //   return () => clearTimeout(t);
+  // }, []);
+
+  // if (isLoading) return <Loading />; // Hiển thị skeleton trước
 
   return (
     <div className="relative w-full">

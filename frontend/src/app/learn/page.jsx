@@ -9,6 +9,9 @@ import LessonButton from "@/components/LessonButton";
 
 export default function Home() {
   const { data } = useStore();
+  if (!data || data.length === 0) {
+  return <Loading />;
+}
   return (
     <div className="lg:flex block lg:mt-20 mt-[120px]">
       <LeftNavbar />
