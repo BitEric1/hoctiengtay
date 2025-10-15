@@ -1,17 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { FaHome  } from "react-icons/fa";
-import { LuNotebookPen } from "react-icons/lu";
-import { FaBookAtlas } from "react-icons/fa6";
-import { FaPhone } from "react-icons/fa6";
-import { LuFileText } from "react-icons/lu";
-const navItems = [
-  { icon: FaHome, path: "/", label: "Home" },
-  { icon: LuNotebookPen, path: "/learn", label: "Learn" },
-  { icon: FaBookAtlas, path: "/translate", label: "Translate" },
-  { icon: FaPhone, path: "/contact", label: "Contact" },
-  { icon: LuFileText, path: "/about", label: "About" },
-];
+import {  navbarList  } from "@/components/LeftNavbar"
 
 export default function MobileNavbar() {
   const pathname = usePathname();
@@ -19,19 +8,15 @@ export default function MobileNavbar() {
 
   return (
     <nav className="fixed top-20 left-0 right-0 bg-white border-b-2 text-gray-900 flex justify-around items-center py-1 border-gray-400 z-50 lg:hidden">
-      {navItems.map((item) => {
-        const Icon = item.icon;
-        const active = pathname === item.path;
-
+      {navbarList.map((item) => { 
+        const active = pathname === item.link;
         return (
           <button
-            key={item.path}
-            onClick={() => router.push(item.path)}
-            
-            className={` ${active ? " bg-black/10" : "text-gray-400"} flex items-center justify-center focus:outline-none w-10 h-10 rounded-full transition-all duration-300 ease-linear `}
+            key={item.id}
+            onClick={() => router.push(item.link)}
+            className={` ${active ? " bg-gray-200" : "text-gray-400"} flex items-center justify-center focus:outline-none w-10 h-10 rounded-full transition-all duration-150 ease-in-out`}
           >
-            <Icon className={` ${active ? "text-blue-500 " : "text-gray-400"}`}  size={22}/>
-            
+            <span className={`${active ? "text-blue-500 " : "text-gray-400"}`}>{item.icon}</span>
           </button>
         );
       })}

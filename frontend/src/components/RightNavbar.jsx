@@ -27,20 +27,21 @@ const RightNavbar = () => {
             <p className="flex items-center gap-2"><BsTrophyFill size={20}  className="text-[#DAA520]" /> Tuần Đầu  </p>
             <p className="flex items-center gap-2"><FaMedal size={20} className="text-yellow-500" /> Suất sắc  </p>
             <p className="flex items-center gap-2"><AiFillStar size={20} className="text-yellow-500" /> Cơ bản  </p>
-            <p className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
                     <AiFillStar size={20} className="text-yellow-500" />
                     <AiFillStar size={20} className="text-yellow-500" />
-                </div> Phổ Thông 
-            </p>
-            <p className="flex items-center gap-2">
+                </div> 
+                <span>Phổ Thông</span> 
+            </div>
+            <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
                     <AiFillStar size={20} className="text-yellow-500" />
                     <AiFillStar size={20} className="text-yellow-500" />
                     <AiFillStar size={20} className="text-yellow-500" />
                 </div>
-                Nâng Cao
-            </p>
+                <span>Nâng Cao</span>
+            </div>
         </div>
       </div>
     </div>

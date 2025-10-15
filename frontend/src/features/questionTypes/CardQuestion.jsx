@@ -5,7 +5,6 @@ import { CheckButton, SkipButton } from "@/components/Button";
 import Card from "@/components/Card";
 import Link from "next/link";
 
-
 function CardQuestion({ questionData, onComplete }) {
   const data = questionData || [];
 
@@ -52,9 +51,6 @@ function CardQuestion({ questionData, onComplete }) {
     setRoundKey((prev) => prev + 1);
   };
 
-
-
-
   useEffect(() => {
     if (data.length > 0 && currQues === null && usedIds.length < data.length) {
       generateRound();
@@ -73,7 +69,6 @@ function CardQuestion({ questionData, onComplete }) {
     if (!selected || !currQues) return;
 
     if (selected === currQues.correct.id) {
-
       setAnswerState("correct");
       setUsedIds((prev) => [...prev, currQues.correct.id]);
       correctAudio.current.play();
@@ -90,8 +85,7 @@ function CardQuestion({ questionData, onComplete }) {
       wrongAudio.current.play();
 
       // auto highlight correct after 1s
-      setTimeout(() => {
-      }, 300);
+      setTimeout(() => {}, 300);
     }
   };
 
@@ -100,8 +94,6 @@ function CardQuestion({ questionData, onComplete }) {
     setSelected(null);
     setActiveId(null);
   };
-
-
 
   const handleSkip = () => {
     if (!currQues) return;
@@ -120,7 +112,9 @@ function CardQuestion({ questionData, onComplete }) {
     <div className="flex items-center justify-center">
       <div className="w-[900px] mx-auto">
         <div className="my-4">
-          <Link href="/learn" className="cst_btn-danger" >Thoát</Link>
+          <Link href="/learn" className="cst_btn-danger">
+            Thoát
+          </Link>
         </div>
         <AnimatePresence mode="wait">
           <motion.div
@@ -140,10 +134,11 @@ function CardQuestion({ questionData, onComplete }) {
             </h1>
 
             <div
-              className={`flex gap-5 justify-center transition ${answerState === "wrong" || answerState === "correct"
-                ? "pointer-events-none"
-                : ""
-                }`}
+              className={`grid gap-5 justify-center transition ${
+                answerState === "wrong" || answerState === "correct"
+                  ? "pointer-events-none"
+                  : ""
+              } grid-cols-2 md:grid-cols-4`}
             >
               {currQues.options.map((ques, index) => (
                 <Card
@@ -158,16 +153,19 @@ function CardQuestion({ questionData, onComplete }) {
                       ? answerState === "correct"
                         ? "correct"
                         : answerState === "wrong"
-                          ? "wrong"
-                          : "active"
+                        ? "wrong"
+                        : "active"
                       : "default"
                   }
                 />
               ))}
             </div>
-            
+
             <div className="p-4 flex justify-between w-full max-w-md">
-              <SkipButton onSkip={handleSkip} disabled={answerState === "correct"} />
+              <SkipButton
+                onSkip={handleSkip}
+                disabled={answerState === "correct"}
+              />
               <CheckButton
                 onCheck={handleChecked}
                 onRetry={handleRetry}

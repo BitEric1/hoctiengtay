@@ -240,9 +240,9 @@ export default function CoursesPage() {
     }
 
     return (
-        <div className="min-h-screen bg-white text-zinc-900">
+        <div className="min-h-screen bg-white text-zinc-900 mt-[120px]">
             <section className="relative">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+                <div className="w-full lg:mx-auto lg:max-w-screen-xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
                     <div className="text-center">
                         <p className="text-sm uppercase tracking-widest text-sky-700/90 font-semibold">
                             HocTiengTay.edu

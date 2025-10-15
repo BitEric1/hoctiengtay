@@ -3,14 +3,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { FaBookAtlas, FaPhone } from "react-icons/fa6";
-import { FaHome  } from "react-icons/fa";
-import { LuFileText, LuNotebookPen } from "react-icons/lu";
 
-const navbarList = [
+import { LuFileText, LuNotebookPen } from "react-icons/lu";
+import { RiBookShelfFill } from "react-icons/ri";
+import { MdImageSearch } from "react-icons/md";
+
+export const navbarList = [
     {
         id: 0,
-        text: "Trang chủ",
-        icon: <FaHome size={20} />,
+        text: "Khám phá",
+        icon: <MdImageSearch size={20} />,
         link: "/",
     },
     {
@@ -25,17 +27,23 @@ const navbarList = [
         icon: <FaBookAtlas size={20} />,
         link: "/translate",
     },
-    {
-        id: 3,
-        text: "Liên hệ",
-        icon: <FaPhone size={20} />,
-        link: "/contact",
-    },
+    // {
+    //     id: 3,
+    //     text: "Liên hệ",
+    //     icon: <FaPhone size={20} />,
+    //     link: "/contact",
+    // },
     {
         id: 4,
         text: "Về chúng tôi",
         icon: <LuFileText size={20} />,
         link: "/about",
+    },
+    {
+        id: 5,
+        text: "Khoá học",
+        icon: <RiBookShelfFill size={20} />,
+        link: "/courses",
     },
 ];
 
@@ -47,6 +55,7 @@ const LeftNavbar = () => {
             {/* Menu */}
             <ul className="flex flex-col gap-3">
                 {navbarList.map((item) => (
+                    
                     <li key={item.id}>
                         <Link
                             href={item.link}
