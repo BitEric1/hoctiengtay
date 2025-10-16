@@ -85,7 +85,7 @@ function CardQuestion({ questionData, onComplete }) {
       wrongAudio.current.play();
 
       // auto highlight correct after 1s
-      setTimeout(() => {}, 300);
+      setTimeout(() => { }, 300);
     }
   };
 
@@ -111,11 +111,7 @@ function CardQuestion({ questionData, onComplete }) {
   return (
     <div className="flex items-center justify-center">
       <div className="w-[900px] mx-auto">
-        <div className="my-4">
-          <Link href="/learn" className="cst_btn-danger">
-            Thoát
-          </Link>
-        </div>
+
         <AnimatePresence mode="wait">
           <motion.div
             key={roundKey}
@@ -134,11 +130,10 @@ function CardQuestion({ questionData, onComplete }) {
             </h1>
 
             <div
-              className={`grid gap-5 justify-center transition ${
-                answerState === "wrong" || answerState === "correct"
+              className={`grid gap-5 justify-center transition ${answerState === "wrong" || answerState === "correct"
                   ? "pointer-events-none"
                   : ""
-              } grid-cols-2 md:grid-cols-4`}
+                } grid-cols-2 md:grid-cols-4`}
             >
               {currQues.options.map((ques, index) => (
                 <Card
@@ -153,8 +148,8 @@ function CardQuestion({ questionData, onComplete }) {
                       ? answerState === "correct"
                         ? "correct"
                         : answerState === "wrong"
-                        ? "wrong"
-                        : "active"
+                          ? "wrong"
+                          : "active"
                       : "default"
                   }
                 />

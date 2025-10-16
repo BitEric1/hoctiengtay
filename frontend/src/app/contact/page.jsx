@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 
 const page = () => {
   const onSubmit = () => {
-      // Xử lý dịch thuật ở đây
-      toast.info("Chức năng này hiện đang phát triển! Cùng đón chờ nhé");
-    }  
+    // Xử lý dịch thuật ở đây
+    toast.success("Cảm ơn phản hồi của bạn");
+  }
   return (
     <div className="w-full h-screen flex lg:mt-20 mt-[120px]">
       <LeftNavbar />
@@ -45,8 +45,24 @@ const page = () => {
             </label>
             <input
               id="phone"
-              type="tel"
+              type="text"
               placeholder="Nhập số điện thoại của bạn"
+              className="w-full border-2 border-gray-300 rounded-md py-3 px-4 outline-none
+                 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-150"
+            />
+          </div>
+          {/* Email */}
+          <div className="relative mb-5">
+            <label
+              htmlFor="phone"
+              className="absolute left-4 -top-2 bg-white px-1 text-sm text-gray-600 font-semibold"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="text"
+              placeholder="Nhập Email của bạn"
               className="w-full border-2 border-gray-300 rounded-md py-3 px-4 outline-none
                  focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-150"
             />
@@ -81,7 +97,7 @@ const page = () => {
           </div>
         </div>
       </div>
-      
+
     </div>
   );
 };

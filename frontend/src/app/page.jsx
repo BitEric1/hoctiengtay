@@ -164,42 +164,7 @@ function Hero({ tab, setTab }) {
                         phương qua bài học tương tác và kho tư liệu số hoá.
                     </p>
 
-                    <div className="mt-10 gap-3 inline-flex rounded-2xl bg-white/20 p-3 1 ring-white/40 backdrop-blur">
-                        {/* <Link
-                            href="/learn"
-                            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-blue-400 px-6 py-3 text-lg font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-blue-300"
-                        >
-                            <Play className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                            <span>Bắt đầu học</span>
-                            <span className="absolute inset-0 translate-x-[-100%] bg-white/20 group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></span>
-                        </Link>
-
-                        <Link
-                            href="/translate"
-                            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-teal-500 via-sky-500 to-blue-500 px-6 py-3 text-lg font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-sky-300"
-                        >
-                            <Languages className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                            <span>Dịch thuật</span>
-                            <span className="absolute inset-0 translate-x-[-100%] bg-white/20 group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></span>
-                        </Link>
-
-                        <Link
-                            href="/courses"
-                            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-500 via-blue-500 to-sky-400 px-6 py-3 text-lg font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-indigo-300"
-                        >
-                            <GraduationCap className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                            <span>Khóa học</span>
-                            <span className="absolute inset-0 translate-x-[-100%] bg-white/20 group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></span>
-                        </Link>
-
-                        <Link
-                            href="/about"
-                            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-500 via-blue-500 to-sky-400 px-6 py-3 text-lg font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-indigo-300"
-                        >
-                            <Users className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-                            <span>Về chúng tôi</span>
-                            <span className="absolute inset-0 translate-x-[-100%] bg-white/20 group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></span>
-                        </Link> */}
+                    <div className="mt-32 gap-3 inline-flex rounded-2xl bg-white/20 p-3 1 ring-white/40 backdrop-blur">
                         <FeaturesNavButton />
                     </div>
                 </div>
@@ -321,9 +286,8 @@ function Gallery() {
                         key={s}
                         onClick={() => setIdx(i)}
                         src={s}
-                        className={`h-16 w-24 cursor-pointer rounded-lg object-cover ring-2 transition ${
-                            i === idx ? "ring-blue-500" : "ring-transparent"
-                        }`}
+                        className={`h-16 w-24 cursor-pointer rounded-lg object-cover ring-2 transition ${i === idx ? "ring-blue-500" : "ring-transparent"
+                            }`}
                     />
                 ))}
             </div>
@@ -373,9 +337,8 @@ function Input({ label, placeholder }) {
 function Primary({ children, white }) {
     return (
         <button
-            className={`h-10 rounded-xl px-4 text-sm font-semibold shadow ${
-                white ? "bg-white text-[#0b1a3a]" : "bg-blue-600 text-white"
-            } hover:opacity-95`}
+            className={`h-10 rounded-xl px-4 text-sm font-semibold shadow ${white ? "bg-white text-[#0b1a3a]" : "bg-blue-600 text-white"
+                } hover:opacity-95`}
         >
             {children}
         </button>

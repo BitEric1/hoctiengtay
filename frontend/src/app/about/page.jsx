@@ -1,6 +1,6 @@
 "use client";
-import { navbarList } from "@/components/LeftNavbar";
-import LeftNavbar from "@/components/LeftNavbar";
+
+
 import {
   BookOpen,
   ChevronLeft,
@@ -60,13 +60,7 @@ export default function AboutHocTiengTay() {
   return (
     <div className="lg:mt-20 mt-[120px] relative w-full space-y-12 sm:space-y-16 flex">
       <div className="w-full lg:max-w-screen-xl lg:mx-auto p-2 flex flex-col gap-2">
-        <div className="hidden w-full h-20 lg:flex items-center justify-center gap-4">
-          {navbarList.map((btn) => (
-            <Link href={btn.link} className="cst_btn" key={btn.id}>
-              {btn.text}
-            </Link>
-          ))}
-        </div>
+
         <HeroHeader />
         {/* 1) Thành viên – đồng màu với hero */}
         <BlueSection
@@ -201,20 +195,20 @@ function HeroHeader() {
 function BlueSection({ id, icon, title, subtitle, children }) {
   return (
     <section className="relative overflow-hidden rounded-3xl bg-white text-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
-  <div className="absolute top-0 left-0 h-[4px] w-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-t-3xl"></div>
-  
-  <div className="flex items-center gap-3 border-b border-gray-200 px-6 py-4 mt-[4px]">
-    <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100">
-      {icon}
-    </div>
-    <div>
-      <h2 className="text-lg font-extrabold">{title}</h2>
-      {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
-    </div>
-  </div>
+      <div className="absolute top-0 left-0 h-[4px] w-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-t-3xl"></div>
 
-  <div className="p-5 sm:p-6">{children}</div>
-</section>
+      <div className="flex items-center gap-3 border-b border-gray-200 px-6 py-4 mt-[4px]">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100">
+          {icon}
+        </div>
+        <div>
+          <h2 className="text-lg font-extrabold">{title}</h2>
+          {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+        </div>
+      </div>
+
+      <div className="p-5 sm:p-6">{children}</div>
+    </section>
   );
 }
 
@@ -278,7 +272,7 @@ const members = [
     role: "Backend Developer",
     avatar: avatar.src,
     quote: "Dữ liệu sạch – API mượt.",
-    skills: ["NEXT.JS", "Express", "MongoDB", "Tailwind"],
+    skills: ["NEXT.JS", "Express", "MongoDB", "Tailwindcss"],
     bio: "Phụ trách kiến trúc BE, DevOps, Tạo API.",
   },
   {
@@ -325,11 +319,33 @@ const members = [
     skills: ["NEXT.JS", "Tailwindcss"],
     bio: "Phụ trách kiến trúc FE, thiết kế hệ thống câu hỏi và tiến trình học.",
   },
+  {
+    id: "m6",
+    name: "Chat GPT",
+    age: 3,
+    school: "no",
+    role: "Trợ Lý hỗ trợ dự án",
+    avatar: avatar.src,
+    quote: "Dăm ba cái bug",
+    skills: ["NEXT.JS", "Tailwindcss", "Express", "MongoDB", "React.JS", "Biên soạn", "Figma", "Motion", "Thiết kế giao diện"],
+    bio: "Phụ trách 40% dự án",
+  },
+  {
+    id: "m5",
+    name: "Copilot",
+    age: 3,
+    school: "no",
+    role: "Trợ Lý hỗ trợ dự án",
+    avatar: avatar.src,
+    quote: "Dăm ba cái bug",
+    skills: ["NEXT.JS", "Tailwindcss", "Express", "MongoDB", "React.JS", "Biên soạn", "Figma", "Motion", "Thiết kế giao diện"],
+    bio: "Phụ trách 40% dự án",
+  },
 ];
 
 function MemberCard({ m, onOpen, className }) {
   const cls = [
-    "group relative w-full overflow-hidden rounded-2xl p-5 text-left  transition-transform duration-200",
+    "group relative w-full overflow-hidden rounded-2xl p-5 text-left transition-transform duration-200",
     "bg-white/10 ring-1 ring-white/30 shadow-[0_2px_10px_rgba(2,6,23,0.06)] hover:-translate-y-0.5 hover:shadow-[0_4px_18px_rgba(2,6,23,0.1)]",
     className,
   ]
@@ -365,7 +381,7 @@ function MemberCard({ m, onOpen, className }) {
 
 function MemberModal({ m, onClose, onPrev, onNext, index, total }) {
   return (
-    <div className="fixed inset-0 z-50">
+    <div className="fixed inset-0 z-50 text-white">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
       <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-5xl overflow-hidden rounded-t-3xl ring-1 ring-white/20 backdrop-blur-md shadow-[0_4px_18px_rgba(0,0,0,0.08)] sm:inset-0 sm:my-auto sm:rounded-3xl">
         <div className="grid grid-cols-1 md:grid-cols-2">

@@ -136,11 +136,7 @@ function ChoiceAudio({ questionData, onComplete }) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-4 relative overflow-hidden">
-      <div className="flex justify-start w-full">
-        <Link href="/learn" className="cst_btn-danger">
-          Thoát
-        </Link>
-      </div>
+      
       <AnimatePresence mode="wait">
         <motion.div
           key={question?.correct?.id || "placeholder"} // fallback key để tránh lỗi

@@ -27,12 +27,12 @@ export const navbarList = [
         icon: <FaBookAtlas size={20} />,
         link: "/translate",
     },
-    // {
-    //     id: 3,
-    //     text: "Liên hệ",
-    //     icon: <FaPhone size={20} />,
-    //     link: "/contact",
-    // },
+    {
+        id: 3,
+        text: "Liên hệ",
+        icon: <FaPhone size={20} />,
+        link: "/contact",
+    },
     {
         id: 4,
         text: "Về chúng tôi",
@@ -55,13 +55,13 @@ const LeftNavbar = () => {
             {/* Menu */}
             <ul className="flex flex-col gap-3">
                 {navbarList.map((item) => (
-                    
+
                     <li key={item.id}>
                         <Link
                             href={item.link}
                             className={`${pathName === item.link
-                                    ? "bg-gradient-to-t from-blue-400 to-blue-500 text-white"
-                                    : ""
+                                ? "bg-gradient-to-t from-blue-400 to-blue-500 text-white"
+                                : ""
                                 }  flex items-center pl-4 gap-3 py-3 rounded-2xl text-lg font-medium hover:bg-black/5  transition-all duration-300 ease-in-out`}
                         >
                             <span>{item.icon}</span>

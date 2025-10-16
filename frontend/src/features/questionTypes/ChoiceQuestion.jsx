@@ -110,11 +110,7 @@ function ChoiceQuestion({ questionData, onComplete }) {
         isTransitioning ? "opacity-50 pointer-events-none" : ""
       }`}
     >
-      <div className="flex justify-start w-full">
-        <Link href="/learn" className="cst_btn-danger">
-          Thoát
-        </Link>
-      </div>
+      
       <AnimatePresence mode="wait">
         {question && (
           <motion.div

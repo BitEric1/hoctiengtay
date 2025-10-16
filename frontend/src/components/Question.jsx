@@ -12,6 +12,7 @@ import FillInTheBlank from "@/features/questionTypes/FillInTheBlank";
 import Arrange from "@/features/questionTypes/Arrange";
 import WriteSentence from "@/features/questionTypes/WriteSentence";
 import CompletePopup from "./CompletePopup";
+import Link from "next/link";
 
 
 
@@ -101,6 +102,11 @@ function QuestionPart({ lessons, slug }) {
 
   return (
     <div className="p-5">
+      <div className="flex justify-start">
+        <Link href="/learn" className="cst_btn-danger">
+          Thoát
+        </Link>
+      </div>
       {Component ? (
         <Component
           questionData={currentPart.data}

@@ -14,7 +14,7 @@ function FeatureButton({ href, label, Icon, variant = "blue" }) {
         <Link
             href={href}
             aria-label={label}
-            className={`group relative inline-flex items-center justify-center gap-2 overflow-hidden
+            className={`text-xs  md:text-sm lg:text-lg  group relative inline-flex items-center justify-center gap-2 overflow-hidden
                   rounded-xl bg-gradient-to-r ${VARIANTS[variant]} px-6 py-3
                   text-lg font-semibold text-white shadow-md transition-all duration-300
                   hover:scale-105`}
@@ -47,10 +47,10 @@ const BUTTONS = [
 
 export default function FeaturesNavButtons() {
     return (
-        <>
+        <div className="grid  grid-cols-1  md:grid-cols-3 lg:grid-cols-4  gap-4 items-center">
             {BUTTONS.map((b) => (
                 <FeatureButton key={b.href} {...b} />
             ))}
-        </>
+        </div>
     );
 }

@@ -34,7 +34,7 @@ const Header = () => {
         {/* Logo/Title Section */}
         <div className="w-full lg:w-2/12 h-20 flex items-center justify-center">
           <Link
-            href="/learn"
+            href="/"
             className="text-xl lg:text-2xl text-white font-bold h-20 flex items-center justify-center"
           >
             <BiSolidPencil size={25} className="mr-2 text-white" />
