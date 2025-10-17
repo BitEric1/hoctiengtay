@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import danca from "@/assets/imgs/dan_ca.jpg";
-import family from "@/assets/imgs/family.jpg";
-import vanhoa from "@/assets/imgs/vanhoa.jpg";
-import vanhoa2 from "@/assets/imgs/vanhoa2.jpg";
-import vanhoa3 from "@/assets/imgs/vanhoa3.jpg";
-import FeaturesNavButton from "@/components/FeaturesNavButtons";
-import Header from "@/components/Header";
+import danca from '@/assets/imgs/dan_ca.jpg'
+import family from '@/assets/imgs/family.jpg'
+import vanhoa from '@/assets/imgs/vanhoa.jpg'
+import vanhoa2 from '@/assets/imgs/vanhoa2.jpg'
+import vanhoa3 from '@/assets/imgs/vanhoa3.jpg'
+import FeaturesNavButton from '@/components/FeaturesNavButtons'
+import Header from '@/components/Header'
 import {
     BookOpen,
     ChevronLeft,
@@ -14,9 +14,9 @@ import {
     MapPinned,
     Sparkles,
     Users,
-} from "lucide-react";
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+} from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useMemo, useState } from 'react'
 
 /**
  *
@@ -26,54 +26,54 @@ import { useEffect, useMemo, useState } from "react";
  */
 
 export default function HomeHocTiengTay() {
-    const [tab, setTab] = useState("learn"); // learn | dictionary | culture
+    const [tab, setTab] = useState('learn') // learn | dictionary | culture
 
     const featured = useMemo(
         () => [
             {
-                key: "greetings",
-                title: "Chào hỏi",
-                img: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop",
-                desc: "Cách chào, làm quen, hỏi thăm hằng ngày",
-                level: "Cơ bản",
+                key: 'greetings',
+                title: 'Chào hỏi',
+                img: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop',
+                desc: 'Cách chào, làm quen, hỏi thăm hằng ngày',
+                level: 'Cơ bản',
                 lessons: 12,
             },
             {
-                key: "food",
-                title: "Ẩm thực",
-                img: "https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop",
-                desc: "Món ăn địa phương & từ vựng đi kèm",
-                level: "Trung bình",
+                key: 'food',
+                title: 'Ẩm thực',
+                img: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop',
+                desc: 'Món ăn địa phương & từ vựng đi kèm',
+                level: 'Trung bình',
                 lessons: 18,
             },
             {
-                key: "family",
-                title: "Gia đình",
+                key: 'family',
+                title: 'Gia đình',
                 img: family.src,
-                desc: "Xưng hô – quan hệ họ hàng – truyền thống",
-                level: "Cơ bản",
+                desc: 'Xưng hô – quan hệ họ hàng – truyền thống',
+                level: 'Cơ bản',
                 lessons: 15,
             },
             {
-                key: "folksong",
-                title: "Làn điệu – dân ca",
+                key: 'folksong',
+                title: 'Làn điệu – dân ca',
                 img: danca.src,
-                desc: "Hát then, sli lượn – giai điệu & lời ca",
-                level: "Nâng cao",
+                desc: 'Hát then, sli lượn – giai điệu & lời ca',
+                level: 'Nâng cao',
                 lessons: 9,
             },
         ],
         []
-    );
+    )
 
     // simple marquee for cultural patterns
     useEffect(() => {
         const id = setInterval(() => {
-            const el = document.querySelector("#marquee");
-            if (el) el.scrollLeft += 1;
-        }, 20);
-        return () => clearInterval(id);
-    }, []);
+            const el = document.querySelector('#marquee')
+            if (el) el.scrollLeft += 1
+        }, 20)
+        return () => clearInterval(id)
+    }, [])
 
     // useEffect(() => {
     //   // Giả lập call API
@@ -139,7 +139,7 @@ export default function HomeHocTiengTay() {
             {/* dev smoke tests */}
             <Smoke />
         </div>
-    );
+    )
 }
 
 function Hero({ tab, setTab }) {
@@ -179,7 +179,7 @@ function Hero({ tab, setTab }) {
                 </svg>
             </div>
         </>
-    );
+    )
 }
 
 function Section({ title, subtitle, icon, children }) {
@@ -198,7 +198,7 @@ function Section({ title, subtitle, icon, children }) {
             </div>
             {children}
         </section>
-    );
+    )
 }
 
 function ValueCard({ title, desc, icon }) {
@@ -210,7 +210,7 @@ function ValueCard({ title, desc, icon }) {
             <h3 className="text-base font-bold text-[#0b1a3a]">{title}</h3>
             <p className="mt-1 text-sm text-[#0b1a3a]/80">{desc}</p>
         </div>
-    );
+    )
 }
 
 function TopicCard({ key, title, img, desc, level, lessons }) {
@@ -244,7 +244,7 @@ function TopicCard({ key, title, img, desc, level, lessons }) {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 function Gallery() {
@@ -253,12 +253,12 @@ function Gallery() {
         vanhoa.src,
         vanhoa2.src,
         vanhoa3.src,
-        "https://images.unsplash.com/photo-1469122312224-c5846569feb1?q=80&w=1600&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
-    ];
-    const [idx, setIdx] = useState(0);
-    const prev = () => setIdx((i) => (i - 1 + images.length) % images.length);
-    const next = () => setIdx((i) => (i + 1) % images.length);
+        'https://images.unsplash.com/photo-1469122312224-c5846569feb1?q=80&w=1600&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop',
+    ]
+    const [idx, setIdx] = useState(0)
+    const prev = () => setIdx((i) => (i - 1 + images.length) % images.length)
+    const next = () => setIdx((i) => (i + 1) % images.length)
     return (
         <div className="relative overflow-hidden rounded-2xl">
             <img
@@ -286,13 +286,14 @@ function Gallery() {
                         key={s}
                         onClick={() => setIdx(i)}
                         src={s}
-                        className={`h-16 w-24 cursor-pointer rounded-lg object-cover ring-2 transition ${i === idx ? "ring-blue-500" : "ring-transparent"
-                            }`}
+                        className={`h-16 w-24 cursor-pointer rounded-lg object-cover ring-2 transition ${
+                            i === idx ? 'ring-blue-500' : 'ring-transparent'
+                        }`}
                     />
                 ))}
             </div>
         </div>
-    );
+    )
 }
 
 function CallToAction() {
@@ -317,7 +318,7 @@ function CallToAction() {
                 </div>
             </div>
         </section>
-    );
+    )
 }
 
 function Input({ label, placeholder }) {
@@ -331,28 +332,29 @@ function Input({ label, placeholder }) {
                 className="h-10 rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-blue-500"
             />
         </label>
-    );
+    )
 }
 
 function Primary({ children, white }) {
     return (
         <button
-            className={`h-10 rounded-xl px-4 text-sm font-semibold shadow ${white ? "bg-white text-[#0b1a3a]" : "bg-blue-600 text-white"
-                } hover:opacity-95`}
+            className={`h-10 rounded-xl px-4 text-sm font-semibold shadow ${
+                white ? 'bg-white text-[#0b1a3a]' : 'bg-blue-600 text-white'
+            } hover:opacity-95`}
         >
             {children}
         </button>
-    );
+    )
 }
 
 function Smoke() {
-    if (typeof window === "undefined") return null;
-    console.groupCollapsed("[HomeHocTiengTay] smoke");
-    console.assert(typeof HomeHocTiengTay === "function", "component defined");
+    if (typeof window === 'undefined') return null
+    console.groupCollapsed('[HomeHocTiengTay] smoke')
+    console.assert(typeof HomeHocTiengTay === 'function', 'component defined')
     console.assert(
-        ["learn", "dictionary", "culture"].includes("learn"),
-        "tabs ok"
-    );
-    console.groupEnd();
-    return null;
+        ['learn', 'dictionary', 'culture'].includes('learn'),
+        'tabs ok'
+    )
+    console.groupEnd()
+    return null
 }
