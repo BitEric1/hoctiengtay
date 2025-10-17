@@ -1,122 +1,137 @@
 "use client";
-import React, { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreCoursesContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-import WriteAnswer from "@/features/questionTypes/WriteAnswer";
+import Arrange from "@/features/questionTypes/Arrange";
 import CardQuestion from "@/features/questionTypes/CardQuestion";
-import MatchQuestion from "@/features/questionTypes/MatchQuestion";
 import ChoiceAudio from "@/features/questionTypes/ChoiceAudio";
 import ChoiceQuestion from "@/features/questionTypes/ChoiceQuestion";
 import FillInTheBlank from "@/features/questionTypes/FillInTheBlank";
-import Arrange from "@/features/questionTypes/Arrange";
+import MatchQuestion from "@/features/questionTypes/MatchQuestion";
+import WriteAnswer from "@/features/questionTypes/WriteAnswer";
 import WriteSentence from "@/features/questionTypes/WriteSentence";
-import CompletePopup from "./CompletePopup";
-import Link from "next/link";
-
-
 
 function QuestionPart({ lessons, slug }) {
-  const router = useRouter();
-  const { data } = useStore();
-  const [currentPartIndex, setCurrentPartIndex] = useState(0);
+    const router = useRouter();
+    const { data, loadLesson, cacheLessons } = useStore();
 
-  // Chọn bài học theo slug (nếu có)
-  const currentLesson = useMemo(() => {
-    if (slug && data?.length) {
-      // Tìm lesson theo slug trong tất cả các unit
-      for (const unit of data) {
-        const found = unit.lessons?.find(
-          (lesson) =>
-            lesson.slug === `/${slug}` || // so sánh cả dạng có dấu /
-            lesson.slug === slug ||
-            (lesson.slug && lesson.slug.replace(/^\//, "") === slug)
+    const [lessonDetail, setLessonDetail] = useState(lessons || null);
+    const [loading, setLoading] = useState(!!slug && !lessons);
+    const [error, setError] = useState(null);
+
+    // nạp lesson theo slug (nếu không truyền lessons)
+    useEffect(() => {
+        let alive = true;
+        if (!slug || lessons) return;
+
+        const key = Array.isArray(slug) ? slug.join("/") : String(slug || "");
+        if (cacheLessons[key]) {
+            setLessonDetail(cacheLessons[key]);
+            setLoading(false);
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+        loadLesson(slug)
+            .then((l) => {
+                if (alive) setLessonDetail(l);
+            })
+            .catch((e) => {
+                console.error(e);
+                if (alive) setError(e);
+            })
+            .finally(() => {
+                if (alive) setLoading(false);
+            });
+
+        return () => {
+            alive = false;
+        };
+    }, [slug, lessons, cacheLessons, loadLesson]);
+
+    // fallback: tìm theo slug trong data list (nếu lesson trong list đã có questions)
+    useEffect(() => {
+        if (lessonDetail || !slug || !data?.length) return;
+        const s = Array.isArray(slug) ? `/${slug.join("/")}` : `/${slug}`;
+        for (const unit of data) {
+            const found = unit.lessons?.find(
+                (l) => l.slug === s || l.slug === s.replace(/^\//, "")
+            );
+            if (found?.questions) {
+                setLessonDetail(found);
+                break;
+            }
+        }
+    }, [slug, data, lessonDetail]);
+
+    // flatten theo types
+    const questionParts = useMemo(() => {
+        if (!lessonDetail?.questions) return [];
+        return lessonDetail.questions.flatMap((group) =>
+            (group.types || []).map((type) => ({
+                type,
+                data: group.questions || [],
+            }))
         );
-        if (found) return found;
-      }
-      return null;
-    }
-    return lessons || null;
-  }, [slug, data, lessons]);
+    }, [lessonDetail]);
 
-  // Làm phẳng danh sách câu hỏi
-  const questionParts = useMemo(() => {
-    if (!currentLesson) return [];
+    const [currentPartIndex, setCurrentPartIndex] = useState(0);
+    const currentPart = questionParts[currentPartIndex];
 
-    // Dạng dữ liệu 1: lessons có field questions
-    if (currentLesson.questions) {
-      return currentLesson.questions.flatMap((item) =>
-        item.types.map((type) => ({
-          type,
-          data: item.questions || [],
-        }))
-      );
-    }
+    const handlePartComplete = () => {
+        if (currentPartIndex < questionParts.length - 1) {
+            setCurrentPartIndex((i) => i + 1);
+        } else if (slug) {
+            router.push("/learn");
+        }
+    };
 
-    // Dạng dữ liệu 2: lesson có types và question
-    if (currentLesson.types) {
-      return currentLesson.types.map((type, idx) => ({
-        id: idx + 1,
-        type,
-        data: currentLesson.question || [],
-      }));
-    }
+    if (loading)
+        return <div className="text-center mt-20">Đang tải bài học…</div>;
+    if (error)
+        return (
+            <div className="text-center mt-20 text-red-500">Lỗi tải bài.</div>
+        );
+    if (!lessonDetail)
+        return <div className="text-center mt-20">Không tìm thấy bài học.</div>;
+    if (!currentPart || !currentPart.data?.length)
+        return (
+            <div className="text-center mt-20">Bài học chưa có câu hỏi.</div>
+        );
 
-    return [];
-  }, [currentLesson]);
+    const typeToComponentMap = {
+        Card: CardQuestion,
+        ChoiceQuestion,
+        ChoiceAudio,
+        FillInTheBlank,
+        WriteAnswer,
+        MatchQuestion,
+        Arrange,
+        WriteSentence,
+    };
+    const Component = typeToComponentMap[currentPart.type];
 
-  const currentPart = questionParts[currentPartIndex];
-
-  const handlePartComplete = () => {
-    if (currentPartIndex < questionParts.length - 1) {
-      setCurrentPartIndex((prev) => prev + 1);
-    } else if (slug) {
-      router.push("/learn");
-    }
-  };
-
-  if (!currentPart || !currentPart.data?.length) {
     return (
-      <div className="text-center text-gray-500 mt-20">
-        Không tìm thấy nội dung cho phần học này.
-      </div>
+        <div className="p-5">
+            <div className="flex justify-start">
+                <Link href="/learn" className="cst_btn-danger">
+                    Thoát
+                </Link>
+            </div>
+
+            {Component ? (
+                <Component
+                    questionData={currentPart.data}
+                    onComplete={handlePartComplete}
+                />
+            ) : (
+                <p>Không thể tải được câu hỏi (type: {currentPart.type}).</p>
+            )}
+        </div>
     );
-  }
-
-  if (currentPartIndex >= questionParts.length) {
-    return <CompletePopup />;
-  }
-
-  const typeToComponentMap = {
-    Card: CardQuestion,
-    ChoiceQuestion: ChoiceQuestion,
-    ChoiceAudio: ChoiceAudio,
-    FillInTheBlank: FillInTheBlank,
-    WriteAnswer: WriteAnswer,
-    MatchQuestion: MatchQuestion,
-    Arrange: Arrange,
-    WriteSentence: WriteSentence,
-  };
-
-  const Component = typeToComponentMap[currentPart.type];
-
-  return (
-    <div className="p-5">
-      <div className="flex justify-start">
-        <Link href="/learn" className="cst_btn-danger">
-          Thoát
-        </Link>
-      </div>
-      {Component ? (
-        <Component
-          questionData={currentPart.data}
-          onComplete={handlePartComplete}
-        />
-      ) : (
-        <p>Không thể tải được câu hỏi.</p>
-      )}
-    </div>
-  );
 }
 
 export default QuestionPart;

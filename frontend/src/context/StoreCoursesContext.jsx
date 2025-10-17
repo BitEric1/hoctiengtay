@@ -1,72 +1,68 @@
 "use client";
-import { resolveMedia } from "@/utils/media";
+import { hydrateLesson } from "@/utils/tokenToAsset";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const StoreContext = createContext(undefined);
 
 const API_BASE =
     process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5500/api/v1";
-const USER_ID = 1; // tạm hard-code để trả về % tiến độ
+const USER_ID = 1; // tạm
 
 export const StoreProvider = ({ children }) => {
-    const [data, setData] = useState([]); // danh sách chương + bài (để vẽ màn list)
-    const [cacheLessons, setCacheLessons] = useState({}); // {slug: lessonDetail}
+    // danh sách chương/bài (để vẽ màn list)
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // tải danh sách chương/bài
+    // cache chi tiết lesson theo slug
+    const [cacheLessons, setCacheLessons] = useState({});
+
+    // nạp danh sách chương/bài + progress
     useEffect(() => {
-        fetch(`${API_BASE}/courses/chapters?userId=${USER_ID}`)
-            .then((r) => r.json())
-            .then(setData)
-            .catch(console.error);
+        let alive = true;
+        const run = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const res = await fetch(
+                    `${API_BASE}/courses/chapters?userId=${USER_ID}`
+                );
+                if (!res.ok) throw new Error(`Status ${res.status}`);
+                const json = await res.json();
+                if (alive) setData(json || []);
+            } catch (e) {
+                console.error(e);
+                if (alive) setError(e);
+            } finally {
+                if (alive) setLoading(false);
+            }
+        };
+        run();
+        return () => {
+            alive = false;
+        };
     }, []);
 
-    // tải chi tiết 1 bài học theo slug -> cấu trúc y hệt FE đang dùng trước đây
+    // nạp chi tiết 1 bài học theo slug
+    const loadLesson = async (slug) => {
+        const key = Array.isArray(slug) ? slug.join("/") : String(slug || "");
+        if (cacheLessons[key]) return cacheLessons[key];
 
-    const normalizeSlug = (s) => (s?.startsWith("/") ? s : `/${s}`);
-
-    const loadLesson = async (slug, { hideCorrect = true } = {}) => {
-        if (cacheLessons[slug]) return cacheLessons[slug];
-
-        const s = normalizeSlug(slug);
-        const url = `${API_BASE}/courses/lessons/${encodeURIComponent(
-            s
-        )}?hideCorrect=${hideCorrect ? 1 : 0}`;
-        const res = await fetch(url);
+        const seg = key.replace(/^\//, "");
+        const res = await fetch(`${API_BASE}/courses/lessons/${seg}`);
+        if (!res.ok) throw new Error(`Lesson ${seg} -> ${res.status}`);
         const json = await res.json();
+        const mapped = hydrateLesson(json);
 
-        const mapped = {
-            ...json,
-            questions: (json.questions || []).map((g) => {
-                // nhóm điền khuyết
-                if (g.types && g.types.includes("FillInTheBlank")) {
-                    return {
-                        ...g,
-                        questions: (g.questions || []).map((q) => ({
-                            ...q,
-                            audio: resolveMedia(q.audio),
-                        })),
-                    };
-                }
-                // nhóm từ vựng
-                return {
-                    ...g,
-                    questions: (g.questions || []).map((q) => ({
-                        ...q,
-                        img: resolveMedia(q.img),
-                        audio: resolveMedia(q.audio),
-                    })),
-                };
-            }),
-        };
-
-        setCacheLessons((prev) => ({ ...prev, [slug]: mapped }));
+        setCacheLessons((prev) => ({ ...prev, [key]: mapped }));
         return mapped;
     };
 
     const value = useMemo(
-        () => ({ data, setData, loadLesson, cacheLessons }),
-        [data, cacheLessons]
+        () => ({ data, setData, loading, error, loadLesson, cacheLessons }),
+        [data, loading, error, cacheLessons]
     );
+
     return (
         <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
     );

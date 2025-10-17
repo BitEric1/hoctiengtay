@@ -1,53 +1,53 @@
 "use client";
 
 import LeftNavbar from "@/components/LeftNavbar";
-import LessonButton from "@/components/LessionButton";
-import RightNavbar from "@/components/RightNavbar";
 import { useStore } from "@/context/StoreCoursesContext";
-import { FaBookmark } from "react-icons/fa6";
 import Loading from "./loading";
 
+import LessonButton from "@/components/LessonButton";
+import RightNavbar from "@/components/RightNavbar";
+import { FaBookmark } from "react-icons/fa6";
+
 export default function Home() {
-    const { data } = useStore();
-
-    if (!data || data.length === 0) return <Loading />;
-
+    const { data, loading, error } = useStore();
+    if (loading) return <Loading />;
+    if (error)
+        return (
+            <div className="text-center mt-20 text-red-500">
+                Lỗi tải dữ liệu: {error.message}
+            </div>
+        );
+    if (!data || data.length === 0)
+        return (
+            <div className="text-center mt-20 text-gray-500">
+                Không có dữ liệu khóa học.
+            </div>
+        );
     return (
-        <div className="lg:flex block lg:mt-20 mt-[120px] bg-[#f8faff] min-h-screen">
+        <div className="lg:flex block lg:mt-20 mt-[120px]">
             <LeftNavbar />
-
-            <main className="flex-1 h-full px-4 sm:px-6 md:px-10 lg:px-16 py-8">
+            <div className="sm:w-full md:w-full  lg:w-7/12 h-full  lg:px-24 py-6 md:px-4 ">
                 {data.map((unit) => (
-                    <section key={unit.id} className="mb-12">
-                        {/* Tiêu đề chương */}
-                        <div className="w-full bg-gradient-to-l from-blue-400 to-blue-600 text-white shadow-md rounded-xl py-3 flex items-center justify-center">
-                            <div className="flex items-center gap-3">
-                                <FaBookmark size={26} />
-                                <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold">
+                    <div className="w-full p-4" key={unit.id}>
+                        <div className="w-full bg-gradient-to-l from-blue-400 to-blue-600 text-white shadow-md rounded-xl p-4 flex items-center justify-center mt-1">
+                            <div className="flex items-center justify-center gap-3 mb-2">
+                                <FaBookmark size={30} />
+                                <h1 className="text-xl lg:text-3xl font-bold">
                                     {unit.title}
                                 </h1>
                             </div>
                         </div>
 
-                        {/* Danh sách bài học */}
-                        <ul
-                            className="mt-6 grid gap-4 sm:gap-6 md:gap-8
-                        grid-cols-1 sm:grid-cols-2 lg:grid-cols-2
-                        xl:grid-cols-3 place-items-center"
-                        >
+                        <ul className="w-full grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-x-10 md:gap-x-20  lg:gap-x-10 gap-y-4  mt-6 px-20  md:px-20 lg:px-10">
                             {unit.lessons.map((lesson) => (
-                                <li
-                                    key={lesson.id}
-                                    className="w-full max-w-[320px]"
-                                >
+                                <li key={lesson.id} className="mb-2">
                                     <LessonButton lessons={lesson} />
                                 </li>
                             ))}
                         </ul>
-                    </section>
+                    </div>
                 ))}
-            </main>
-
+            </div>
             <RightNavbar />
         </div>
     );
