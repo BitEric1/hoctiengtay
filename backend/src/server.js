@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const app = express();
 app.use(morgan("dev"));
 const translateRouter = require("./routes/router.translate.js");
+const coursesRouter = require("./routes/router.courses.js");
 
 const PORT = process.env.PORT || 5000;
 app.use(cors());
@@ -21,6 +22,7 @@ app.get("/api/v1/health", cors(corsOptions), (_, res) =>
     res.send({ ok: true })
 );
 app.use("/api/v1", translateRouter);
+app.use("/api/v1", coursesRouter);
 
 app.use((err, req, res, next) => {
     console.error("ERROR:", err);
