@@ -1,32 +1,32 @@
-import React from "react";
-import { motion } from "framer-motion";
+"use client";
 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa";
+import { MdMenuBook } from "react-icons/md";
+import Link from "next/link";
+
+// -------------------- CheckButton --------------------
 function CheckButton({ state = "default", onCheck, onRetry, onNext, disabled }) {
-  // Không cần biến baseStyle nữa, vì đã gộp vào class .cst_btn
-  
   const getButtonProps = () => {
     switch (state) {
       case "wrong":
         return {
           label: "Thử lại",
           onClick: onRetry,
-          // Sử dụng class nền và class màu đỏ
-          className: " cst_btn-danger",
+          className: "cst_btn-danger",
         };
       case "correct":
         return {
           label: "Tiếp tục",
           onClick: onNext,
-          // Sử dụng class nền và class màu xanh lá
-          className: " cst_btn-success",
+          className: "cst_btn-success",
         };
-      default: // 'default' state
+      default:
         return {
           label: "Kiểm tra",
           onClick: onCheck,
-          // Sử dụng class nền và class màu xanh dương
-          // Trạng thái disabled sẽ được CSS tự động xử lý
-          className: " cst_btn-primary",
+          className: "cst_btn-primary",
         };
     }
   };
@@ -40,17 +40,22 @@ function CheckButton({ state = "default", onCheck, onRetry, onNext, disabled }) 
   );
 }
 
+// -------------------- SkipButton --------------------
 function SkipButton({ onSkip }) {
   return (
     <motion.button
-      // whileTap={{ scale: 0.9 }}
-      // whileHover={{ scale: 1.05 }}
       onClick={onSkip}
       className="cst_btn"
+      whileTap={{ scale: 0.95 }}
+      whileHover={{ scale: 1.03 }}
     >
       Bỏ qua
     </motion.button>
   );
 }
 
+// -------------------- LessonButton --------------------
+
+
+// -------------------- Exports --------------------
 export { CheckButton, SkipButton };

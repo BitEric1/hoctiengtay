@@ -19,6 +19,8 @@ export const StoreProvider = ({ children }) => {
           id: "bai-1",
           title: "Số đếm từ 1 đến 10",
           slug: "/chuong1-bai1",
+          locked: false,
+          progress: 100,
           questions: [
             {
               id: 1,
@@ -76,6 +78,7 @@ export const StoreProvider = ({ children }) => {
           id: "bai2",
           slug: "/chuong1-bai2",
           title: "Bài 2: Số đếm từ 10 đến 100",
+          locked: false,
           questions: [
             {
               id: 1,
@@ -134,6 +137,7 @@ export const StoreProvider = ({ children }) => {
           id: "bai3",
           slug: "/chuong1-bai3",
           title: "Bài 3: Số hàng trăm",
+          locked: true,
           questions: [
             {
               id: 1,
@@ -192,6 +196,7 @@ export const StoreProvider = ({ children }) => {
           id: "bai4",
           slug: "/chuong1-bai4",
           title: "Bài 4: Số hàng nghìn",
+          locked: true,
           questions: [
             {
               id: 1,
@@ -254,6 +259,7 @@ export const StoreProvider = ({ children }) => {
         {
           id: "bai1",
           title: "Số đếm từ 1 đến 10",
+          locked: true,
           slug: "/chuong2-bai1",
           questions: [
             {
@@ -311,6 +317,7 @@ export const StoreProvider = ({ children }) => {
         {
           id: "bai2",
           slug: "/chuong2-bai2",
+          locked: true,
           title: "Bài 2: Số đếm từ 10 đến 100",
           questions: [
             {
@@ -369,6 +376,7 @@ export const StoreProvider = ({ children }) => {
         {
           id: "bai3",
           title: "Bài 3: Số hàng trăm",
+          locked: true,
           slug: "/chuong2-bai3",
           questions: [
             {
@@ -428,6 +436,7 @@ export const StoreProvider = ({ children }) => {
           id: "bai4",
           title: "Bài 4: Số hàng nghìn",
           slug: "/chuong2-bai4",
+          locked: true,
           questions: [
             {
               id: 1,

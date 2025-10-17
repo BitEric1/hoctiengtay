@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import bannerURL from '@/assets/imgs/banner3.jpg';
 
 /**
  *
@@ -25,7 +26,20 @@ import { useEffect, useMemo, useState } from "react";
  * Mục tiêu: truyền tải sứ mệnh GIỮ GÌN VĂN HOÁ + HỌC TIẾNG DÂN TỘC
  */
 
+// --- THÊM COMPONENT MÀN HÌNH CHÀO ---
+function SplashScreen() {
+    return (
+        <div className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-[linear-gradient(90deg,#2563eb_0%,#60a5fa_100%)]">
+            <h1 className="animate-pulse text-3xl font-black tracking-tight text-white sm:text-4xl">
+                Chào mừng bạn đến với HoctiengTay.edu!
+            </h1>
+        </div>
+    );
+}
+// --- KẾT THÚC COMPONENT MÀN HÌNH CHÀO ---
+
 export default function HomeHocTiengTay() {
+    const [isLoading, setIsLoading] = useState(true); // <--- THÊM STATE LOADING
     const [tab, setTab] = useState("learn"); // learn | dictionary | culture
 
     const featured = useMemo(
@@ -75,13 +89,22 @@ export default function HomeHocTiengTay() {
         return () => clearInterval(id);
     }, []);
 
-    // useEffect(() => {
-    //   // Giả lập call API
-    //   const t = setTimeout(() => setIsLoading(false), 600);
-    //   return () => clearTimeout(t);
-    // }, []);
+    // --- THÊM useEffect ĐỂ ẨN MÀN HÌNH CHÀO SAU 2.5 GIÂY ---
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2500); // 2.5 giây
 
-    // if (isLoading) return <Loading />; // Hiển thị skeleton trước
+        return () => clearTimeout(timer); // Cleanup khi component unmount
+    }, []);
+    // --- KẾT THÚC useEffect ---
+
+
+    // --- THÊM KIỂM TRA LOADING ĐỂ HIỆN MÀN HÌNH CHÀO ---
+    if (isLoading) {
+        return <SplashScreen />;
+    }
+    // --- KẾT THÚC KIỂM TRA ---
 
     return (
         <div className="relative w-full">
@@ -146,14 +169,14 @@ function Hero({ tab, setTab }) {
     return (
         <>
             <Header />
-            <div className="mt-20 relative h-[75vh] min-h-[460px] w-full overflow-hidden rounded-b-[36px]">
+            <div className="mt-20 relative h-[75vh] min-h-[460px] w-full overflow-hidden ">
                 {/* Background image + gradient tone lam */}
                 <img
-                    src="https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/1/18/0beb34cf1fd74195b58660ea6c59b5d4"
+                    src={bannerURL.src}
                     alt="cover"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-fill"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.25)_0%,rgba(2,6,23,0.45)_40%,rgba(37,99,235,0.6)_75%,rgba(96,165,250,0.8)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.1)_0%,rgba(2,6,23,0.25)_40%,rgba(37,99,235,0.35)_75%,rgba(96,165,250,0.5)_100%)]" />
 
                 <div className="relative mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 text-center text-white">
                     <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
@@ -170,13 +193,13 @@ function Hero({ tab, setTab }) {
                 </div>
 
                 {/* wave divider */}
-                <svg
+                {/* <svg
                     className="absolute bottom-[-1px] left-0 right-0 w-full text-[#eaf3ff]"
                     viewBox="0 0 1440 80"
                     fill="currentColor"
                 >
                     <path d="M0,64L60,58.7C120,53,240,43,360,58.7C480,75,600,117,720,122.7C840,128,960,96,1080,69.3C1200,43,1320,21,1380,10.7L1440,0L1440,80L1380,80C1320,80,1200,80,1080,80C960,80,840,80,720,80C600,80,480,80,360,80C240,80,120,80,60,80L0,80Z" />
-                </svg>
+                </svg> */}
             </div>
         </>
     );
@@ -253,8 +276,6 @@ function Gallery() {
         vanhoa.src,
         vanhoa2.src,
         vanhoa3.src,
-        "https://images.unsplash.com/photo-1469122312224-c5846569feb1?q=80&w=1600&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
     ];
     const [idx, setIdx] = useState(0);
     const prev = () => setIdx((i) => (i - 1 + images.length) % images.length);

@@ -131,8 +131,8 @@ function CardQuestion({ questionData, onComplete }) {
 
             <div
               className={`grid gap-5 justify-center transition ${answerState === "wrong" || answerState === "correct"
-                  ? "pointer-events-none"
-                  : ""
+                ? "pointer-events-none"
+                : ""
                 } grid-cols-2 md:grid-cols-4`}
             >
               {currQues.options.map((ques, index) => (

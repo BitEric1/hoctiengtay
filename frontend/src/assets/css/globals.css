@@ -4,9 +4,14 @@
 
 /* custom class nút chữ nhật */
 /* Nút chính (màu xanh dương - của bạn) */
+/* Trong file global.css của bạn */
+body {
+  /* Màu nền nhạt này sẽ làm các thẻ card trắng nổi bật hơn */
+  background-color: #eaf3ff; /* Hoặc #eaf3ff
+  cho đồng bộ với wave */
+}
 
-
- /* cst btn primary  */
+/* cst btn primary  */
 .cst_btn-primary {
   @apply py-3 px-6 font-bold text-white rounded-[10px]
   bg-gradient-to-r from-blue-500  to-sky-400
@@ -16,13 +21,12 @@
   transition-all duration-300 ease-linear;
 }
 
-
 /* Nút thành công (màu xanh lá) */
 /* .cst_btn-success {
   @apply py-3 px-6 font-bold text-white rounded-[10px] bg-green-500 shadow-[0_4px_0_0_#15803d] hover:translate-y-[2px] 
   hover:shadow-[0_2px_0_0_#15803d] active:translate-y-[4px] active:shadow-none transition-all duration-150;
 } */
- .cst_btn-success {
+.cst_btn-success {
   @apply py-3 px-6 font-bold text-white rounded-[10px]
   bg-gradient-to-r from-emerald-500 to-green-500 
   shadow-[0_4px_0_0_#166534]
@@ -31,13 +35,12 @@
   transition-all duration-300 ease-linear;
 }
 
-
 /* Nút báo lỗi (màu đỏ) */
 /* .cst_btn-danger {
   @apply py-3 px-6 font-bold text-white rounded-[10px] bg-red-500 shadow-[0_4px_0_0_#b91c1c] hover:translate-y-[2px] 
   hover:shadow-[0_2px_0_0_#b91c1c] active:translate-y-[4px] active:shadow-none transition-all duration-150;
 } */
- .cst_btn-danger {
+.cst_btn-danger {
   @apply py-3 px-6 font-bold text-white rounded-[10px]
   bg-gradient-to-r from-rose-600 via-red-500 to-orange-600
   shadow-[0_4px_0_0_#991b1b]
@@ -47,7 +50,7 @@
 }
 
 .cst_btn-disable {
-  @apply  relative w-[140px] h-[56px] font-bold text-white rounded-lg bg-gray-500 shadow-[0_4px_0_0_#333]  
+  @apply relative w-[140px] h-[56px] font-bold text-white rounded-lg bg-gray-500 shadow-[0_4px_0_0_#333]  
   hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#3f3f3f] active:translate-y-[4px] active:shadow-none transition-all 
   duration-150;
 }
@@ -55,14 +58,12 @@
 /* cst_btn  */
 .cst_btn {
   @apply font-bold text-gray-700 py-3 px-6 rounded-xl
-  bg-gradient-to-r from-gray-100 to-gray-200
+  bg-gradient-to-l from-gray-100 to-gray-200
   shadow-[0_3px_0_0_#bdbdbd]
   hover:translate-y-[2px] hover:shadow-[0_2px_0_0_#b5b5b5]
   active:translate-y-[4px] active:shadow-none
   transition-all duration-300 ease-linear;
 }
-
-
 
 .cst_input {
   @apply w-full py-3 px-4 border border-gray-300 rounded-md outline-none 

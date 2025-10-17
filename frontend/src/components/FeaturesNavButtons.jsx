@@ -29,7 +29,12 @@ function FeatureButton({ href, label, Icon, variant = "blue" }) {
 
 /** Cấu hình các nút */
 const BUTTONS = [
-    { href: "/learn", label: "Bắt đầu học", Icon: Play, variant: "blue" },
+    {
+        href: "/learn",
+        label: "Bắt đầu học",
+        Icon: Play,
+        variant: "blue"
+    },
     {
         href: "/translate",
         label: "Dịch thuật",
@@ -42,12 +47,11 @@ const BUTTONS = [
         Icon: GraduationCap,
         variant: "indigo",
     },
-    { href: "/about", label: "Về chúng tôi", Icon: Users, variant: "indigo" },
 ];
 
 export default function FeaturesNavButtons() {
     return (
-        <div className="grid  grid-cols-1  md:grid-cols-3 lg:grid-cols-4  gap-4 items-center">
+        <div className="grid  grid-cols-1  md:grid-cols-3 lg:grid-cols-3  gap-4 items-center">
             {BUTTONS.map((b) => (
                 <FeatureButton key={b.href} {...b} />
             ))}
