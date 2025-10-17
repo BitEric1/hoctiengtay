@@ -5,11 +5,7 @@
 /* custom class nút chữ nhật */
 /* Nút chính (màu xanh dương - của bạn) */
 /* Trong file global.css của bạn */
-body {
-  /* Màu nền nhạt này sẽ làm các thẻ card trắng nổi bật hơn */
-  background-color: #eaf3ff; /* Hoặc #eaf3ff
-  cho đồng bộ với wave */
-}
+
 
 /* cst btn primary  */
 .cst_btn-primary {

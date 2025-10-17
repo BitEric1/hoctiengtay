@@ -77,7 +77,7 @@ function LessonButton({ lessons }) {
             <div className="flex items-center justify-between text-xs text-gray-600 mt-1">
                 <div className="flex items-center gap-1">
                     <FaBookOpen size={14} className="text-gray-400" />
-                    <span>{progress}% thành</span>
+                    <span>{progress}% hoàn thành</span>
                 </div>
 
                 {isLocked ? (
@@ -92,7 +92,7 @@ function LessonButton({ lessons }) {
                         href={`/learn/${lessons.slug}`}
                         className="cst_btn-primary text-xs px-3 py-1 rounded-md"
                     >
-                        {isDone ? "Tiếp tục" : "Bắt đầu"}
+                        {isDone ? "Ôn lại" : "Bắt đầu"}
                     </Link>
                 )}
             </div>

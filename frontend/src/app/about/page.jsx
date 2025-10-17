@@ -1,6 +1,5 @@
 "use client";
 
-
 import {
   BookOpen,
   ChevronLeft,
@@ -16,6 +15,8 @@ import {
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { avatar } from "@/assets/imgs";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 /**
  * AboutHocTiengTay – màu dưới = màu trên (gradient lam #2563eb → #60a5fa)
  * - Card thành viên bằng nhau
@@ -24,6 +25,7 @@ import { avatar } from "@/assets/imgs";
  */
 
 export default function AboutHocTiengTay() {
+  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(null);
   const sections = useMemo(
     () => [
@@ -60,7 +62,15 @@ export default function AboutHocTiengTay() {
   return (
     <div className="lg:mt-20 mt-[120px] relative w-full space-y-12 sm:space-y-16 flex">
       <div className="w-full lg:max-w-screen-xl lg:mx-auto p-2 flex flex-col gap-2">
-
+        {/* Nút quay lại */}
+        <div className="my-4 ">
+          <button
+            onClick={() => router.push("/learn")}
+            className="cst_btn-primary flex items-center gap-1">
+            <FaArrowLeft size={14} />
+            Quay lại học
+          </button>
+        </div>
         <HeroHeader />
         {/* 1) Thành viên – đồng màu với hero */}
         <BlueSection
@@ -327,7 +337,17 @@ const members = [
     role: "Trợ Lý hỗ trợ dự án",
     avatar: avatar.src,
     quote: "Dăm ba cái bug",
-    skills: ["NEXT.JS", "Tailwindcss", "Express", "MongoDB", "React.JS", "Biên soạn", "Figma", "Motion", "Thiết kế giao diện"],
+    skills: [
+      "NEXT.JS",
+      "Tailwindcss",
+      "Express",
+      "MongoDB",
+      "React.JS",
+      "Biên soạn",
+      "Figma",
+      "Motion",
+      "Thiết kế giao diện",
+    ],
     bio: "Phụ trách 40% dự án",
   },
   {
@@ -338,7 +358,17 @@ const members = [
     role: "Trợ Lý hỗ trợ dự án",
     avatar: avatar.src,
     quote: "Dăm ba cái bug",
-    skills: ["NEXT.JS", "Tailwindcss", "Express", "MongoDB", "React.JS", "Biên soạn", "Figma", "Motion", "Thiết kế giao diện"],
+    skills: [
+      "NEXT.JS",
+      "Tailwindcss",
+      "Express",
+      "MongoDB",
+      "React.JS",
+      "Biên soạn",
+      "Figma",
+      "Motion",
+      "Thiết kế giao diện",
+    ],
     bio: "Phụ trách 40% dự án",
   },
 ];

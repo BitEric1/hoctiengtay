@@ -332,8 +332,8 @@ function CallToAction() {
                         Vào học ngay
                     </Link>
 
-                    <Link href="/" className="cst_btn">
-                        Khám phá tư liệu
+                    <Link href="/learn-more" className="cst_btn">
+                        Khám phá thêm
                     </Link>
                 </div>
             </div>

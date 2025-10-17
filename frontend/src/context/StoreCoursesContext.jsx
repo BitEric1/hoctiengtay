@@ -20,6 +20,7 @@ export const StoreProvider = ({ children }) => {
           title: "Số đếm từ 1 đến 10",
           slug: "/chuong1-bai1",
           locked: false,
+          done: true,
           progress: 100,
           questions: [
             {

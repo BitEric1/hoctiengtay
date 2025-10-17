@@ -7,7 +7,6 @@ import LessonButton from "@/components/LessionButton";
 import { FaBookmark } from "react-icons/fa6";
 import Loading from "./loading";
 
-
 export default function Home() {
   const { data } = useStore();
 
@@ -21,10 +20,30 @@ export default function Home() {
         {data.map((unit) => (
           <section key={unit.id} className="mb-12">
             {/* Tiêu đề chương */}
-            <div className="w-full bg-gradient-to-l from-blue-400 to-blue-600 text-white shadow-md rounded-xl py-3 flex items-center justify-center">
-              <div className="flex items-center gap-3">
-                <FaBookmark size={26} />
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold">
+
+            <div
+              className="relative w-full rounded-2xl bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 
+  text-white shadow-lg overflow-hidden py-5 flex items-center justify-center group transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]"
+            >
+              {/* Hiệu ứng ánh sáng mờ nền */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.15),_transparent_60%)] opacity-70 pointer-events-none"></div>
+
+              {/* Viền sáng động */}
+              <div className="absolute inset-0 rounded-2xl border border-white/20 group-hover:border-white/40 transition-all duration-300"></div>
+
+              {/* Nội dung chính */}
+              <div className="relative flex items-center gap-3 text-center px-4">
+                <div
+                  className="p-3 rounded-full bg-white/20 backdrop-blur-sm 
+      shadow-inner border border-white/30 flex items-center justify-center transition duration-300 group-hover:scale-110"
+                >
+                  <FaBookmark
+                    size={24}
+                    className="text-yellow-300 drop-shadow"
+                  />
+                </div>
+
+                <h1 className="text-xl sm:text-2xl font-bold tracking-wide drop-shadow-sm">
                   {unit.title}
                 </h1>
               </div>
@@ -32,9 +51,9 @@ export default function Home() {
 
             {/* Danh sách bài học */}
             <ul
-              className="mt-6 grid gap-4 sm:gap-6 md:gap-8
+              className="mt-6 grid gap-2 sm:gap-4 md:gap-6
                         grid-cols-1 sm:grid-cols-2 lg:grid-cols-2
-                        xl:grid-cols-3 place-items-center"
+                        xl:grid-cols-2 place-items-center"
             >
               {unit.lessons.map((lesson) => (
                 <li key={lesson.id} className="w-full max-w-[320px]">

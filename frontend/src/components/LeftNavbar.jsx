@@ -18,7 +18,7 @@ export const navbarList = [
         id: 0,
         text: "Khám phá",
         icon: <FaCompass size={20} className="text-sky-500" />, // biểu tượng la bàn
-        link: "/",
+        link: "/explore",
     },
     {
         id: 2,
@@ -57,9 +57,9 @@ const LeftNavbar = () => {
                         <Link
                             href={item.link}
                             className={`${pathName === item.link
-                                ? "bg-gradient-to-r from-blue-300 to-blue-400 text-white"
-                                : ""
-                                } flex items-center pl-4 gap-3 py-3 rounded-2xl text-lg font-medium hover:bg-black/5 transition-all duration-300 ease-in-out`}
+                                ? " border-l-[10px] border-b-[4px] border-blue-400 bg-blue-50 rounded-3xl"
+                                : "rounded-xl"
+                                } flex items-center pl-4 gap-3 py-3  text-lg font-medium hover:bg-blue-200 transition-all duration-300 ease-in-out`}
                         >
                             <span>{item.icon}</span>
                             <span>{item.text}</span>
