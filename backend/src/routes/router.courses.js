@@ -9,7 +9,7 @@ r.get("/health", (_req, res) => res.json({ ok: true }));
  * GET /api/v1/courses/chapters?userId=1
  * Trả: [{id,title,lessons:[{id,title,slug,locked,progress}]}]
  */
-r.get("/courses/chapters", async (req, res) => {
+r.get("/chapters", async (req, res) => {
     try {
         const userId = Number(req.query.userId || 0);
 
@@ -81,7 +81,7 @@ r.get("/courses/chapters", async (req, res) => {
  * Trả: {id,title,slug,questions:[{id,types,questions:[...]}]}
  * Lưu ý: :slug là 1 segment không có "/" đầu; trong DB slug lưu dạng "/chuong1-bai1"
  */
-r.get("/courses/lessons/:slug", async (req, res) => {
+r.get("/lessons/:slug", async (req, res) => {
     try {
         // chuẩn hoá slug
         let slug = req.params.slug || "";
@@ -191,7 +191,7 @@ r.get("/courses/lessons/:slug", async (req, res) => {
  * GET /api/v1/courses
  * Trả: { data: [ {id,title,lessons:[{id,title,slug,questions:[...]}]} ] }
  */
-r.get("/courses", async (_req, res) => {
+r.get("/", async (_req, res) => {
     try {
         const [rows] = await pool.query(`
       SELECT c.id c_id, c.code c_code, c.title c_title, c.sort_order c_sort,
