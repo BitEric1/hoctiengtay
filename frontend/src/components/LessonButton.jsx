@@ -1,22 +1,23 @@
 "use client";
 
-import React, { useMemo } from "react";
 import Link from "next/link";
+import { useMemo } from "react";
 import {
-    FaRegHandPaper,
     FaBookOpen,
+    FaFeatherAlt,
+    FaGlobeAmericas,
+    FaLeaf,
+    FaLightbulb,
+    FaLock,
+    FaMusic,
+    FaPuzzlePiece,
+    FaRegHandPaper,
     FaRocket,
     FaStar,
-    FaLightbulb,
-    FaPuzzlePiece,
-    FaFeatherAlt,
-    FaLeaf,
-    FaMusic,
-    FaGlobeAmericas,
-    FaLock,
 } from "react-icons/fa";
 
 function LessonButton({ lessons }) {
+    console.log(lessons);
     const progress = lessons.progress ?? 0;
     const isDone = lessons.done ?? false;
     const isLocked = lessons.locked ?? false; // thêm prop locked
@@ -42,13 +43,20 @@ function LessonButton({ lessons }) {
 
     return (
         <div
-            className={`w-full bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col gap-2 transition hover:shadow-md ${isLocked ? "opacity-60 grayscale pointer-events-none" : ""
-                }`}
+            className={`w-full bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col gap-2 transition hover:shadow-md ${
+                isLocked ? "opacity-60 grayscale pointer-events-none" : ""
+            }`}
         >
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <div>{isLocked ? <FaLock size={22} className="text-gray-400" /> : randomIcon}</div>
+                    <div>
+                        {isLocked ? (
+                            <FaLock size={22} className="text-gray-400" />
+                        ) : (
+                            randomIcon
+                        )}
+                    </div>
                     <div>
                         <h3 className="text-sm font-semibold text-gray-800">
                             {lessons.title}
@@ -57,8 +65,8 @@ function LessonButton({ lessons }) {
                             {isLocked
                                 ? "Chưa mở khóa"
                                 : isDone
-                                    ? "Hoàn thành"
-                                    : "Chưa hoàn thành"}
+                                ? "Hoàn thành"
+                                : "Chưa hoàn thành"}
                         </p>
                     </div>
                 </div>
@@ -67,8 +75,9 @@ function LessonButton({ lessons }) {
             {/* Progress bar */}
             <div className="w-full bg-gray-100 h-3 rounded-full overflow-hidden relative">
                 <div
-                    className={`absolute top-0 left-0 h-full transition-all duration-300 ${isLocked ? "bg-gray-300" : "bg-blue-500"
-                        }`}
+                    className={`absolute top-0 left-0 h-full transition-all duration-300 ${
+                        isLocked ? "bg-gray-300" : "bg-blue-500"
+                    }`}
                     style={{ width: `${progress}%` }}
                 ></div>
             </div>
