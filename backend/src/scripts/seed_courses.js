@@ -732,19 +732,77 @@ async function upsertLesson(conn, chapterId, lesson, idx) {
     return res.insertId;
 }
 
-async function createSet(conn, lessonId, kind, title, order, allowedTypes) {
-    const [res] = await conn.query(
-        `INSERT INTO exercise_sets(lesson_id, kind, title, sort_order, allowed_types, total_exercises)
-     VALUES (?,?,?,?,JSON_ARRAY(?),0)`,
-        [
-            lessonId,
-            kind,
-            title,
-            order,
-            ...(allowedTypes && allowedTypes.length ? [allowedTypes] : [[]]),
-        ]
+// async function createSet(conn, lessonId, kind, title, order, allowedTypes) {
+//     const [res] = await conn.query(
+//         `INSERT INTO exercise_sets(lesson_id, kind, title, sort_order, allowed_types, total_exercises)
+//      VALUES (?,?,?,?,JSON_ARRAY(?),0)`,
+//         [
+//             lessonId,
+//             kind,
+//             title,
+//             order,
+//             ...(allowedTypes && allowedTypes.length ? [allowedTypes] : [[]]),
+//         ]
+//     );
+//     return res.insertId;
+// }
+
+async function createSet(
+    conn,
+    lessonId,
+    kind,
+    title,
+    order,
+    allowedTypes = []
+) {
+    const [res] = await conn.execute(
+        `INSERT INTO exercise_sets
+        (lesson_id, kind, title, sort_order, allowed_types, total_exercises)
+     VALUES (?,?,?,?,CAST(? AS JSON),0)`,
+        [lessonId, kind, title, order, JSON.stringify(allowedTypes)]
     );
     return res.insertId;
+}
+
+async function resetLessonContent(conn, lessonId) {
+    await conn.query(
+        `
+    DELETE o FROM exercise_options o
+    JOIN exercises e ON o.exercise_id = e.id
+    JOIN exercise_sets s ON e.set_id = s.id
+    WHERE s.lesson_id = ?`,
+        [lessonId]
+    );
+
+    await conn.query(
+        `
+    DELETE f FROM exercise_fill_blank f
+    JOIN exercises e ON f.exercise_id = e.id
+    JOIN exercise_sets s ON e.set_id = s.id
+    WHERE s.lesson_id = ?`,
+        [lessonId]
+    );
+
+    await conn.query(
+        `
+    DELETE v FROM exercise_vocab v
+    JOIN exercises e ON v.exercise_id = e.id
+    JOIN exercise_sets s ON e.set_id = s.id
+    WHERE s.lesson_id = ?`,
+        [lessonId]
+    );
+
+    await conn.query(
+        `
+    DELETE e FROM exercises e
+    JOIN exercise_sets s ON e.set_id = s.id
+    WHERE s.lesson_id = ?`,
+        [lessonId]
+    );
+
+    await conn.query(`DELETE FROM exercise_sets WHERE lesson_id = ?`, [
+        lessonId,
+    ]);
 }
 
 async function createExercise(conn, setId, type, sortOrder) {
@@ -813,6 +871,7 @@ async function seed() {
                     lesson,
                     li
                 );
+                await resetLessonContent(conn, lessonId);
 
                 // Mỗi lesson có mảng "questions" gồm 2 group:
                 //  - group 1: vocab (Card/ChoiceQuestion/ChoiceAudio/MatchQuestion/WriteAnswer)

@@ -10,66 +10,80 @@ r.get("/health", (_req, res) => res.json({ ok: true }));
  * Trả: [{id,title,lessons:[{id,title,slug,locked,progress}]}]
  */
 r.get("/chapters", async (req, res) => {
-    try {
-        const userId = Number(req.query.userId || 0);
+    const userId = Number(req.query.userId || 0) || 1;
 
-        const sql = `
+    try {
+        // 1) Lấy chapter + lesson (đã publish), kèm progress người dùng
+        const [rows] = await pool.query(
+            `
       SELECT
-        c.id  AS c_id,  c.code AS c_code,  c.title AS c_title,  c.sort_order AS c_sort,
-        l.id  AS l_id,  l.code AS l_code,  l.title AS l_title,  l.slug, l.sort_order AS l_sort,
-        l.is_published, l.publish_at, l.is_locked_default,
-        COALESCE(t_all.cnt_all,0)  AS cnt_all,
-        COALESCE(t_done.cnt_done,0) AS cnt_done
+        c.id            AS chapter_id,
+        c.title         AS chapter_title,
+        c.sort_order    AS chapter_order,
+        l.id            AS lesson_id,
+        l.title         AS lesson_title,
+        l.slug          AS lesson_slug,
+        l.sort_order    AS lesson_order,
+        l.is_published,
+        l.is_locked_default,
+        COALESCE(p.percent, 0) AS progress
       FROM chapters c
       JOIN lessons  l ON l.chapter_id = c.id
-      /* tổng exercise mỗi bài */
-      LEFT JOIN (
-        SELECT l.id AS lesson_id, COUNT(e.id) AS cnt_all
-        FROM lessons l
-        JOIN exercise_sets s ON s.lesson_id = l.id
-        JOIN exercises     e ON e.set_id     = s.id
-        GROUP BY l.id
-      ) t_all   ON t_all.lesson_id = l.id
-      /* số bài đã hoàn thành theo user */
-      LEFT JOIN (
-        SELECT l.id AS lesson_id, SUM(CASE WHEN u.is_done=1 THEN 1 ELSE 0 END) AS cnt_done
-        FROM lessons l
-        JOIN exercise_sets s ON s.lesson_id = l.id
-        JOIN exercises     e ON e.set_id     = s.id
-        LEFT JOIN user_exercise_progress u
-               ON u.exercise_id = e.id AND u.user_id = ?
-        GROUP BY l.id
-      ) t_done  ON t_done.lesson_id = l.id
-      ORDER BY c_sort, l_sort;
-    `;
-        const [rows] = await pool.query(sql, [userId]);
+      LEFT JOIN user_lesson_progress p
+             ON p.user_id = ? AND p.lesson_id = l.id
+      WHERE l.is_published = 1
+      ORDER BY c.sort_order, l.sort_order
+      `,
+            [userId]
+        );
 
-        const out = [];
-        const by = new Map();
+        // 2) Gom nhóm theo chapter, tính locked/done theo thứ tự
+        const chaptersMap = new Map();
         for (const r of rows) {
-            if (!by.has(r.c_id)) {
-                const chap = { id: r.c_code, title: r.c_title, lessons: [] };
-                by.set(r.c_id, chap);
-                out.push(chap);
+            if (!chaptersMap.has(r.chapter_id)) {
+                chaptersMap.set(r.chapter_id, {
+                    id: r.chapter_id,
+                    title: r.chapter_title,
+                    lessons: [],
+                });
             }
-            const percent = r.cnt_all
-                ? Math.round((100 * r.cnt_done) / r.cnt_all)
-                : 0;
-            const locked =
-                r.is_published === 0 ||
-                (r.publish_at && new Date(r.publish_at) > new Date()) ||
-                r.is_locked_default === 1;
-
-            by.get(r.c_id).lessons.push({
-                id: r.l_code,
-                title: r.l_title,
-                slug: r.slug,
-                locked,
-                progress: percent,
+            chaptersMap.get(r.chapter_id).lessons.push({
+                id: r.lesson_id,
+                title: r.lesson_title,
+                slug: r.lesson_slug.replace(/^\//, ""), // FE dùng /learn/[slug]
+                order: r.lesson_order,
+                is_published: r.is_published === 1,
+                is_locked_default: r.is_locked_default === 1,
+                progress: r.progress,
+                done: r.progress >= 100,
+                locked: true, // tạm, lát tính
             });
         }
 
-        res.json(out);
+        // 3) Tính locked theo thứ tự trong từng chương
+        for (const chapter of chaptersMap.values()) {
+            // sort đề phòng
+            chapter.lessons.sort((a, b) => a.order - b.order);
+
+            let prevDone = false;
+            chapter.lessons.forEach((lesson, idx) => {
+                if (!lesson.is_published) {
+                    lesson.locked = true;
+                } else if (idx === 0) {
+                    lesson.locked = lesson.is_locked_default; // bài đầu
+                } else {
+                    lesson.locked = !prevDone; // mở nếu bài trước đã done
+                }
+                prevDone = lesson.done;
+            });
+
+            // (tùy chọn) % tiến độ chương
+            const total = chapter.lessons.length || 1;
+            const doneCount = chapter.lessons.filter((x) => x.done).length;
+            chapter.progress = Math.round((doneCount / total) * 100);
+        }
+
+        res.json(Array.from(chaptersMap.values()));
     } catch (e) {
         console.error(e);
         res.status(500).json({ error: "Internal error" });

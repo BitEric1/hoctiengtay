@@ -2,12 +2,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChalkboardTeacher, FaInfoCircle } from "react-icons/fa";
-import { FaBookAtlas, FaBookOpenReader, FaCompass, FaEnvelopeOpenText } from "react-icons/fa6";
-
-
+import {
+    FaBookAtlas,
+    FaBookOpenReader,
+    FaCompass,
+    FaEnvelopeOpenText,
+} from "react-icons/fa6";
 
 export const navbarList = [
-
     {
         id: 1,
         text: "Bài học",
@@ -20,6 +22,7 @@ export const navbarList = [
         icon: <FaCompass size={20} className="text-sky-500" />, // biểu tượng la bàn
         link: "/explore",
     },
+
     {
         id: 2,
         text: "Dịch & Từ điển",
@@ -44,6 +47,12 @@ export const navbarList = [
         icon: <FaChalkboardTeacher size={20} className="text-pink-500" />, // giáo viên bảng
         link: "/courses",
     },
+    {
+        id: 6,
+        text: "Phát âm",
+        icon: <FaInfoCircle size={20} className="text-yellow-500" />, // thông tin
+        link: "/pronun",
+    },
 ];
 
 const LeftNavbar = () => {
@@ -56,10 +65,11 @@ const LeftNavbar = () => {
                     <li key={item.id}>
                         <Link
                             href={item.link}
-                            className={`${pathName === item.link
-                                ? " border-l-[10px] border-b-[4px] border-blue-400 bg-blue-50 rounded-3xl"
-                                : "rounded-xl"
-                                } flex items-center pl-4 gap-3 py-3  text-lg font-medium hover:bg-blue-200 transition-all duration-300 ease-in-out`}
+                            className={`${
+                                pathName === item.link
+                                    ? " border-l-[10px] border-b-[4px] border-blue-400 bg-blue-50 rounded-3xl"
+                                    : "rounded-xl"
+                            } flex items-center pl-4 gap-3 py-3  text-lg font-medium hover:bg-blue-200 transition-all duration-300 ease-in-out`}
                         >
                             <span>{item.icon}</span>
                             <span>{item.text}</span>

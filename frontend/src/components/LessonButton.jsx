@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa";
 
 function LessonButton({ lessons }) {
-    console.log(lessons);
     const progress = lessons.progress ?? 0;
     const isDone = lessons.done ?? false;
     const isLocked = lessons.locked ?? false; // thêm prop locked
